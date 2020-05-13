@@ -5,7 +5,7 @@
       "useImageWorker": true
     },
     "debug": true,
-    "showGrid": false
+    "showGrid": true
   },
   "platformSettings": {
     "inspector": true,

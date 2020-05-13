@@ -6,12 +6,14 @@ module.exports = {
   },
   plugins: ['prettier'],
   extends: [
+    'standard',
     'eslint:recommended',
     'plugin:prettier/recommended',
     'prettier',
   ],
   rules: {
     quotes: [2, 'single', 'avoid-escape'],
+    'space-before-function-paren': ['error', 'never'],
     'no-extra-boolean-cast': 'off',
     'no-unused-vars': [
       1,

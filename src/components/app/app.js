@@ -1,5 +1,5 @@
 import { Lightning, Utils, Locale } from 'wpe-lightning-sdk';
-import { TopMenu } from '../index';
+import { Main, Splash, VideoPlayer } from '../index';
 
 export default class App extends Lightning.Component {
   static getFonts() {
@@ -16,38 +16,91 @@ export default class App extends Lightning.Component {
 
   static _template() {
     return {
-      Wrapper: {
-        w: 1920,
-        h: 1080,
-        color: 0xfffbb03b,
-        src: Utils.asset('images/background.png'),
-        flex: { direction: 'row', wrap: true, padding: 20 },
-        TopMenu: {
-          type: TopMenu
-        },
-        Logo: {
-          x: w => w / 2,
-          y: h => h / 2,
-          flexItem: {
-            alignSelf: 'center'
-          },
-          src: Utils.asset('images/logo.png')
-        },
-        Text: {
-          mount: 0.5,
-          x: w => w / 2,
-          y: h => h / 2,
-          flexItem: {
-            alignSelf: 'center'
-          },
-          text: {
-            text: "Let's start Building!",
-            fontFace: 'Regular',
-            fontSize: 64,
-            textColor: 0xbbffffff
-          }
-        }
+      Splash: {
+        type: Splash,
+        /**
+         * Define which signals you accept from the splash page
+         */
+        signals: { loaded: true },
+        alpha: 0
+      },
+      VideoPlayer: {
+        type: VideoPlayer,
+        alpha: 0,
+        signals: { videoEnded: 'ready', mainFocus: true }
+      },
+      Main: {
+        type: Main,
+        alpha: 0,
+        signals: { videoFocus: true }
       }
     };
+  }
+
+  _setup() {
+    this._setState('SplashState');
+  }
+
+  static _states() {
+    return [
+      class SplashState extends this {
+        $enter() {
+          this.tag('Splash').setSmooth('alpha', 1);
+        }
+
+        $exit() {
+          this.tag('Splash').setSmooth('alpha', 0);
+        }
+
+        loaded() {
+          this._setState('MainState');
+        }
+      },
+      class MainState extends this {
+        $enter() {
+          this.tag('Main').patch({
+            smooth: { alpha: 1, y: 0 }
+          });
+          this.tag('VideoPlayer').setSmooth('alpha', 1);
+          this.tag('VideoPlayer').play('http://video.metrological.com/loop.mp4', true);
+        }
+
+        $exit() {
+          this.tag('Main').patch({
+            smooth: { alpha: 0, y: 100 }
+          });
+
+          this.tag('VideoPlayer').setSmooth('alpha', 0);
+          this.tag('VideoPlayer').stop();
+        }
+
+        videoFocus() {
+          this._setState('VideoState');
+        }
+
+        /**
+         * Tell Lightning which component is the active component
+         * and should handle the remote control events.
+         * @returns {*|never}
+         * @private
+         */
+        _getFocused() {
+          return this.tag('Main');
+        }
+      },
+      class VideoState extends this {
+        mainFocus() {
+          this._setState('MainState');
+        }
+
+        ready() {
+          console.log('ready signal');
+        }
+
+        _getFocused() {
+          return this.tag('VideoPlayer');
+        }
+      }
+    ];
   }
 }
