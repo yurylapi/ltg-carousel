@@ -1,0 +1,17 @@
+{
+  "appSettings": {
+    "stage": {
+      "clearColor": "0x00000000",
+      "useImageWorker": true
+    },
+    "debug": true,
+    "showGrid": false
+  },
+  "platformSettings": {
+    "inspector": true,
+    "path": "./static",
+    "log": true,
+    "showVersion": false,
+    "esEnv": "es6"
+  }
+}
