@@ -4,7 +4,6 @@ import { TopMenu } from '../index';
 export default class Main extends Lightning.Component {
   static _template() {
     return {
-      Logo: {},
       TopMenu: {
         type: TopMenu,
         items: [

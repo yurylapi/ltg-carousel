@@ -60,7 +60,7 @@ export default class VideoPlayer extends Lightning.Component {
   }
 
   stop() {
-    this.tag('MediaPlayer').close();
+    this.tag('MediaPlayer').doPause();
   }
 
   /**
@@ -75,7 +75,7 @@ export default class VideoPlayer extends Lightning.Component {
   }
 
   _handleEnter() {
-    this.tag('MediaPlayer').doPause();
+    this.tag('MediaPlayer').playPause();
   }
 
   $mediaplayerPause() {
@@ -116,7 +116,8 @@ export default class VideoPlayer extends Lightning.Component {
         _handleEnter() {
           this.tag('MediaPlayer').doPlay();
         }
-      }
+      },
+      class SkipState extends this {}
     ];
   }
 }

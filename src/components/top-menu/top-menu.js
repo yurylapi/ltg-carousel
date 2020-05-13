@@ -1,17 +1,30 @@
-import { Lightning } from 'wpe-lightning-sdk';
+import { Lightning, Utils } from 'wpe-lightning-sdk';
 import Item from './top-menu.item';
+import { Logo } from '@/components';
 
 export default class TopMenu extends Lightning.Component {
   static _template() {
     return {
       w: 1920,
       rect: true,
-      color: 0x00000000,
+      color: 0x80000000,
+      flex: { direction: 'row', padding: 20, wrap: false, justifyContent: 'space-evenly' },
+      Logo: {
+        w: 55,
+        h: 28,
+        flexItem: { margin: 10 },
+        type: Logo,
+        svgTexture: Utils.asset('images/t-mobile-logo.svg')
+      },
       Items: {
+        flexItem: { margin: 10 },
+        w: 1000,
         children: []
       },
-      Logo: {},
-      PersonalArea: {}
+      PersonalArea: {
+        flexItem: { margin: 10 },
+        w: 300
+      }
     };
   }
 
@@ -21,7 +34,7 @@ export default class TopMenu extends Lightning.Component {
 
   set items(v) {
     this.tag('Items').children = v.map((el, idx) => {
-      return { type: Item, action: el.action, label: el.label, x: idx * 400 };
+      return { type: Item, action: el.action, label: el.label, x: idx * 250 };
     });
   }
 

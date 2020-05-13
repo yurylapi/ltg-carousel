@@ -2,5 +2,5 @@
   "name": "Lightning Carousel",
   "identifier": "com.epam.app.LtgCarousel",
   "version": "1.0.0",
-  "icon": "./static/icon.png"
+  "icon": "./static/icon.ico"
 }

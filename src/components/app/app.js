@@ -41,6 +41,14 @@ export default class App extends Lightning.Component {
     this._setState('SplashState');
   }
 
+  _init() {
+    this._currentlyFocused = null;
+  }
+
+  _getFocused() {
+    return this._currentlyFocused;
+  }
+
   static _states() {
     return [
       class SplashState extends this {
@@ -63,6 +71,8 @@ export default class App extends Lightning.Component {
           });
           this.tag('VideoPlayer').setSmooth('alpha', 1);
           this.tag('VideoPlayer').play('http://video.metrological.com/loop.mp4', true);
+
+          this._currentlyFocused = this.tag('Main');
         }
 
         $exit() {
@@ -70,25 +80,24 @@ export default class App extends Lightning.Component {
             smooth: { alpha: 0, y: 100 }
           });
 
-          this.tag('VideoPlayer').setSmooth('alpha', 0);
           this.tag('VideoPlayer').stop();
+
+          this._currentlyFocused = null;
         }
 
         videoFocus() {
           this._setState('VideoState');
         }
-
-        /**
-         * Tell Lightning which component is the active component
-         * and should handle the remote control events.
-         * @returns {*|never}
-         * @private
-         */
-        _getFocused() {
-          return this.tag('Main');
-        }
       },
       class VideoState extends this {
+        $enter() {
+          this._currentlyFocused = this.tag('VideoPlayer');
+        }
+
+        $exit() {
+          this._currentlyFocused = null;
+        }
+
         mainFocus() {
           this._setState('MainState');
         }
@@ -96,11 +105,8 @@ export default class App extends Lightning.Component {
         ready() {
           console.log('ready signal');
         }
-
-        _getFocused() {
-          return this.tag('VideoPlayer');
-        }
-      }
+      },
+      class Error extends this {}
     ];
   }
 }
