@@ -42,10 +42,6 @@ export default class VideoPlayer extends Lightning.Component {
     });
   }
 
-  _handleUp() {
-    this.signal('mainFocus');
-  }
-
   _focus() {
     this.tag('Controls').alpha = 1;
   }

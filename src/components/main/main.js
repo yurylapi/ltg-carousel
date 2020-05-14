@@ -20,10 +20,6 @@ export default class Main extends Lightning.Component {
     return this.tag('TopMenu');
   }
 
-  _handleDown() {
-    this.signal('videoFocus');
-  }
-
   _handleEnter() {
     this.signal('select', { item: this.tag('TopMenu').activeItem });
   }

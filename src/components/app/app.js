@@ -1,5 +1,5 @@
 import { Lightning, Utils, Locale } from 'wpe-lightning-sdk';
-import { Main, Splash, VideoPlayer } from '../index';
+import { Main, Splash, VideoPlayer, Details } from '../index';
 
 export default class App extends Lightning.Component {
   static getFonts() {
@@ -26,13 +26,28 @@ export default class App extends Lightning.Component {
       },
       VideoPlayer: {
         type: VideoPlayer,
+        alpha: 0
+      },
+      Background: {
+        rect: true,
+        w: 1920,
+        h: 1080,
         alpha: 0,
-        signals: { videoEnded: 'ready', mainFocus: true }
+        src: Utils.asset('images/thumb-1920-932618.jpg')
       },
       Main: {
         type: Main,
         alpha: 0,
-        signals: { videoFocus: true }
+        signals: { select: 'menuSelect' }
+      },
+      Details: {
+        type: Details,
+        title: Utils.asset('titles/logo-game-of-thrones-png-7.png'),
+        rating: 98,
+        year: '2011-2019',
+        pgRating: 18,
+        alpha: 0,
+        signals: { videoEnded: 'ended' }
       }
     };
   }
@@ -69,8 +84,8 @@ export default class App extends Lightning.Component {
           this.tag('Main').patch({
             smooth: { alpha: 1, y: 0 }
           });
-          this.tag('VideoPlayer').setSmooth('alpha', 1);
-          this.tag('VideoPlayer').play('http://video.metrological.com/loop.mp4', true);
+
+          this.tag('Background').setSmooth('alpha', 1);
 
           this._currentlyFocused = this.tag('Main');
         }
@@ -80,30 +95,67 @@ export default class App extends Lightning.Component {
             smooth: { alpha: 0, y: 100 }
           });
 
-          this.tag('VideoPlayer').stop();
+          this.tag('Background').setSmooth('alpha', 0);
 
           this._currentlyFocused = null;
         }
 
-        videoFocus() {
-          this._setState('VideoState');
+        _handleDown() {
+          this._setState('DetailsState');
+        }
+
+        menuSelect({ item }) {
+          if (this._hasMethod(item.action)) {
+            return this[item.action]();
+          }
+        }
+
+        home() {
+          this._setState('MainState.HomeState');
+        }
+
+        tvShows() {
+          this._setState('MainState.TvShowsState');
+        }
+
+        movies() {
+          this._setState('MainState.MoviesState');
+        }
+
+        recentlyAdded() {
+          this._setState('MainState.RecentlyAddedState');
+        }
+
+        static _states() {
+          return [
+            class HomeState extends MainState {},
+            class TvShowsState extends MainState {},
+            class MoviesState extends MainState {},
+            class RecentlyAddedState extends MainState {}
+          ];
         }
       },
-      class VideoState extends this {
-        $enter() {
-          this._currentlyFocused = this.tag('VideoPlayer');
+      class DetailsState extends this {
+        $enter(args, { video } = { video: 'video/Winter-Is-Coming-Stark-Game-Of-Thrones-Live-Wallpaper.mp4' }) {
+          this.tag('VideoPlayer').play(Utils.asset(video), false);
+          this.tag('VideoPlayer').setSmooth('alpha', 1);
+          this.tag('Details').setSmooth('alpha', 1);
+          this._currentlyFocused = this.tag('Details');
         }
 
         $exit() {
+          this.tag('VideoPlayer').setSmooth('alpha', 0);
+          this.tag('Details').setSmooth('alpha', 0);
+          this.tag('VideoPlayer').stop();
           this._currentlyFocused = null;
         }
 
-        mainFocus() {
+        _handleUp() {
           this._setState('MainState');
         }
 
-        ready() {
-          console.log('ready signal');
+        ended() {
+          this.tag('Background').setSmooth('alpha', 1);
         }
       },
       class Error extends this {}
