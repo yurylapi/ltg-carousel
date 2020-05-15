@@ -8,12 +8,12 @@ export default class Item extends Lightning.Component {
     };
   }
 
-  set label(v) {
-    this.text.text = v;
+  set label(label) {
+    this.text.text = label;
   }
 
-  set action(v) {
-    this._action = v;
+  set action(label) {
+    this._action = label;
   }
 
   get action() {

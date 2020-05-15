@@ -52,6 +52,7 @@ export default class VideoPlayer extends Lightning.Component {
 
   play(src, loop) {
     this.tag('MediaPlayer').open(src);
+    this.tag('MediaPlayer').videoEl.style.display = 'block';
     this.tag('MediaPlayer').videoEl.loop = loop;
   }
 
@@ -66,8 +67,7 @@ export default class VideoPlayer extends Lightning.Component {
    */
   $mediaplayerEnded() {
     this.signal('videoEnded');
-    // clear source
-    this.tag('MediaPlayer').close();
+    this.stop();
   }
 
   _handleEnter() {

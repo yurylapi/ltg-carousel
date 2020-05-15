@@ -32,9 +32,9 @@ export default class TopMenu extends Lightning.Component {
     this._index = 0;
   }
 
-  set items(v) {
-    this.tag('Items').children = v.map((el, idx) => {
-      return { type: Item, action: el.action, label: el.label, x: idx * 250 };
+  set items(items) {
+    this.tag('Items').children = items.map((item, idx) => {
+      return { type: Item, action: item.action, label: item.label, x: idx * 250 };
     });
   }
 

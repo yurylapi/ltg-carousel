@@ -3,13 +3,12 @@ import { Lightning } from 'wpe-lightning-sdk';
 export default class Button extends Lightning.Component {
   static _template() {
     return {
-      texture: Lightning.Tools.getRoundRect(150, 40, 4),
+      texture: Lightning.Tools.getRoundRect(200, 70, 4),
       Label: {
-        x: 75,
-        y: 22,
-        mount: 0.5,
+        w: 200,
+        y: 18,
         color: 0xffffffff,
-        text: { fontSize: 20 }
+        text: { fontSize: 24, fontFace: 'Regular', fontStyle: 'bold', textAlign: 'center' }
       }
     };
   }

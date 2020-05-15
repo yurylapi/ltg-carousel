@@ -12,22 +12,43 @@ export default class Details extends Lightning.Component {
   static _template() {
     return {
       Title: {
-        y: 100,
-        src: {}
+        x: 100,
+        y: 110
       },
       Rating: {
-        y: 150,
-        text: {}
+        x: 120,
+        y: 530,
+        text: {
+          fontFace: 'Regular',
+          fontSize: 24,
+          fontStyle: 'bold'
+        }
       },
       Year: {
-        y: 200,
-        text: {}
+        x: 270,
+        y: 530,
+        text: {
+          fontFace: 'Regular',
+          fontSize: 24
+        }
       },
       PGRating: {
-        y: 250,
-        text: {}
+        x: 420,
+        y: 530,
+        zIndex: 1,
+        text: {
+          fontFace: 'Regular',
+          fontSize: 24
+        },
+        RatingBorder: {
+          zIndex: 0,
+          x: -8,
+          texture: Lightning.Tools.getRoundRect(53, 30, 4, 1, 0xffffffff, true, 0x00ffffff)
+        }
       },
-      Controls: {
+      DetailsControls: {
+        x: 120,
+        y: 600,
         type: DetailsControls
       }
     };
@@ -37,7 +58,7 @@ export default class Details extends Lightning.Component {
     this.tag('Title').patch({ src: this.title });
     this.tag('Rating').patch({ text: { text: `${this.rating}% Match` } });
     this.tag('Year').patch({ text: { text: this.year } });
-    this.tag('PGRating').patch({ text: { text: this.pgRating } });
+    this.tag('PGRating').patch({ text: { text: `${this.pgRating}+` } });
   }
 
   _getFocused() {
