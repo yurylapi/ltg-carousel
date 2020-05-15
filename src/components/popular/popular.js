@@ -4,10 +4,21 @@ import PopularItem from './popular.item';
 export default class Popular extends Lightning.Component {
   static _template() {
     return {
+      PopularTitle: {
+        text: {
+          text: 'Popular on T - Mobile',
+          fontFace: 'Regular',
+          fontSize: 24,
+          fontStyle: 'bold'
+        }
+      },
       PopularItems: {
-        w: 1920,
+        w: 1600,
+        y: 50,
+        x: 20,
         rect: true,
-        flex: { direction: 'row', padding: 20, wrap: false, justifyContent: 'space-evenly' },
+        color: 0x00000000,
+        flex: { direction: 'row', wrap: false, justifyContent: 'space-evenly' },
         children: []
       }
     };
@@ -15,9 +26,6 @@ export default class Popular extends Lightning.Component {
 
   _init() {
     this._index = 0;
-    if (this.tag('PopularItems').children.length) {
-      this.signal('background', { src: this.tag('PopularItems').children[0].picture });
-    }
   }
 
   set popularItems(popularItems) {
@@ -26,14 +34,14 @@ export default class Popular extends Lightning.Component {
         type: PopularItem,
         thumbnail: popularItem.thumbnail,
         title: popularItem.title,
+        graphicTitle: popularItem.graphicTitle,
         video: popularItem.video,
-        picture: popularItem.picture,
-        x: idx * 250
+        picture: popularItem.picture
       };
     });
   }
 
-  get activeItem() {
+  get activePopularItem() {
     return this.popularItems[this._index];
   }
 
@@ -54,6 +62,11 @@ export default class Popular extends Lightning.Component {
   }
 
   _getFocused() {
-    return this.activeItem;
+    this.signal('popularItemMedia', {
+      src: this.activePopularItem.picture,
+      graphicTitle: this.activePopularItem.graphicTitle
+    });
+    // this.signal('popularItemIntro', { video: this.activePopularItem.video });
+    return this.activePopularItem;
   }
 }

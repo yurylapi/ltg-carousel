@@ -1,43 +1,50 @@
 const POPULAR_ITEMS = [
   {
     title: 'Vikings',
-    thumbnail: 'images/thumb-1920-932618.jpg',
+    graphicTitle: 'title/Vikings-PNG-HD.png',
+    thumbnail: 'images/vikings.jpg',
     video: 'video/Winter-Is-Coming-Stark-Game-Of-Thrones-Live-Wallpaper.mp4',
-    picture: 'images/thumb-1920-932618.jpg'
+    picture: 'images/vik-bg.jpg'
   },
   {
     title: 'Strange Things',
-    thumbnail: 'images/thumb-1920-932618.jpg',
+    graphicTitle: 'title/logo-game-of-thrones-png-7.png',
+    thumbnail: 'images/download.jpg',
     video: 'video/Winter-Is-Coming-Stark-Game-Of-Thrones-Live-Wallpaper.mp4',
     picture: 'images/thumb-1920-932618.jpg'
   },
   {
     title: 'The Walking Dead',
-    thumbnail: 'images/thumb-1920-932618.jpg',
+    graphicTitle: 'title/logo-game-of-thrones-png-7.png',
+    thumbnail: 'images/e2fdac24323a419ee9a2244662383c0f.jpg',
     video: 'video/Winter-Is-Coming-Stark-Game-Of-Thrones-Live-Wallpaper.mp4',
     picture: 'images/thumb-1920-932618.jpg'
   },
   {
     title: 'Flash',
-    thumbnail: 'images/thumb-1920-932618.jpg',
+    graphicTitle: 'title/logo-game-of-thrones-png-7.png',
+    thumbnail: 'images/The-Flash-Seizoen-1.jpg',
     video: 'video/Winter-Is-Coming-Stark-Game-Of-Thrones-Live-Wallpaper.mp4',
     picture: 'images/thumb-1920-932618.jpg'
   },
   {
     title: 'Arrow',
-    thumbnail: 'images/thumb-1920-932618.jpg',
+    graphicTitle: 'title/logo-game-of-thrones-png-7.png',
+    thumbnail: 'images/arrow.jpg',
     video: 'video/Winter-Is-Coming-Stark-Game-Of-Thrones-Live-Wallpaper.mp4',
     picture: 'images/thumb-1920-932618.jpg'
   },
   {
     title: 'Black Mirror',
-    thumbnail: 'images/thumb-1920-932618.jpg',
+    graphicTitle: 'title/logo-game-of-thrones-png-7.png',
+    thumbnail: 'images/black-mir.jpg',
     video: 'video/Winter-Is-Coming-Stark-Game-Of-Thrones-Live-Wallpaper.mp4',
     picture: 'images/thumb-1920-932618.jpg'
   },
   {
     title: 'Punisher',
-    thumbnail: 'images/thumb-1920-932618.jpg',
+    graphicTitle: 'title/logo-game-of-thrones-png-7.png',
+    thumbnail: 'images/punisher.jpg',
     video: 'video/Winter-Is-Coming-Stark-Game-Of-Thrones-Live-Wallpaper.mp4',
     picture: 'images/thumb-1920-932618.jpg'
   }

@@ -45,16 +45,18 @@ export default class App extends Lightning.Component {
         alpha: 0
       },
       Popular: {
+        x: 120,
+        y: 530,
         type: Popular,
         alpha: 0,
-        signals: { background: '_firstBackground' },
-        popularItems: [POPULAR_ITEMS]
+        popularItems: POPULAR_ITEMS,
+        signals: { popularItemMedia: '_popularItemMedia', popularItemIntro: '_popularItemIntro' }
       }
     };
   }
 
   _setup() {
-    this._setState('SplashState');
+    this._setState('MainState');
   }
 
   _init() {
@@ -143,6 +145,7 @@ export default class App extends Lightning.Component {
           this.tag('VideoPlayer').play(Utils.asset(video), false);
           this.tag('VideoPlayer').setSmooth('alpha', 1, { duration: 2 });
           this.tag('Details').setSmooth('alpha', 1);
+          this.tag('Popular').setSmooth('alpha', 1);
           this._currentlyFocused = this.tag('Details');
         }
 
@@ -150,6 +153,7 @@ export default class App extends Lightning.Component {
           this.tag('VideoPlayer').setSmooth('alpha', 0, { duration: 2 });
           this.tag('VideoPlayer').stop();
           this.tag('Details').setSmooth('alpha', 0);
+          this.tag('Popular').setSmooth('alpha', 0);
           this._currentlyFocused = null;
         }
 
@@ -168,31 +172,22 @@ export default class App extends Lightning.Component {
       },
       class PopularState extends this {
         $enter() {
-          this.tag('Popular').patch({
-            smooth: { alpha: 1, y: 0 }
-          });
+          this.tag('Popular').setSmooth('alpha', 1);
           this.tag('Main').patch({
             smooth: { alpha: 1, y: 0 }
           });
-          this.tag('Background').patch({
-            smooth: { alpha: 1, y: 0 }
-          });
-          this.tag('Details').patch({
-            smooth: { alpha: 1, y: 0 }
-          });
+          // this.tag('Background').src = Utils.asset(src);
+          this.tag('Background').setSmooth('alpha', 1);
+          this.tag('Details').setSmooth('alpha', 1);
 
           this._currentlyFocused = this.tag('Popular');
         }
 
-        _firstBackground(src) {
-          this.tag('Background').patch({
-            src: Utils.asset(src)
-          });
-        }
-
         $exit() {
           this.tag('Popular').setSmooth('alpha', 0);
-          this.tag('Main').setSmooth('alpha', 0);
+          this.tag('Main').patch({
+            smooth: { alpha: 0, y: 100 }
+          });
           this.tag('Background').setSmooth('alpha', 0);
           this.tag('Details').setSmooth('alpha', 0);
 

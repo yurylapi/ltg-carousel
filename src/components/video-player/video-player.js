@@ -50,8 +50,8 @@ export default class VideoPlayer extends Lightning.Component {
     this.tag('Controls').alpha = 0;
   }
 
-  play(src, loop) {
-    this.tag('MediaPlayer').open(src);
+  play(src, loop, settings = {}) {
+    this.tag('MediaPlayer').open(src, settings);
     this.tag('MediaPlayer').videoEl.style.display = 'block';
     this.tag('MediaPlayer').videoEl.loop = loop;
   }
