@@ -56,7 +56,7 @@ export default class App extends Lightning.Component {
   }
 
   _setup() {
-    this._setState('MainState');
+    this._setState('SplashState');
   }
 
   _init() {
