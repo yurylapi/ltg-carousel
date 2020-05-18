@@ -1,4 +1,4 @@
-import { Lightning } from 'wpe-lightning-sdk';
+import { Lightning, Locale } from 'wpe-lightning-sdk';
 import PopularItem from './popular.item';
 
 export default class Popular extends Lightning.Component {
@@ -6,7 +6,7 @@ export default class Popular extends Lightning.Component {
     return {
       PopularTitle: {
         text: {
-          text: 'Popular on T - Mobile',
+          text: Locale.tr.popular_now,
           fontFace: 'Regular',
           fontSize: 24,
           fontStyle: 'bold'

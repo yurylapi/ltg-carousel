@@ -10,11 +10,11 @@ export default class TopMenu extends Lightning.Component {
       color: 0x80000000,
       flex: { direction: 'row', padding: 20, wrap: false, justifyContent: 'space-evenly' },
       Logo: {
-        w: 55,
-        h: 28,
+        w: 90,
+        h: 34,
         flexItem: { margin: 10 },
         type: Logo,
-        svgTexture: Utils.asset('images/t-mobile-logo.svg')
+        svgTexture: Utils.asset('images/ui/logo.svg')
       },
       Items: {
         flexItem: { margin: 10 },

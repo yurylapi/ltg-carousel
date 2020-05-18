@@ -4,8 +4,8 @@ import { Button } from '@/components';
 export default class DetailsControls extends Lightning.Component {
   static _template() {
     return {
-      LeftButton: { color: 0xfff21502, type: Button, buttonText: Locale.tr.playButton },
-      RightButton: { color: 0xfff21502, x: 250, type: Button, buttonText: `+ ${Locale.tr.myListButton}` }
+      LeftButton: { color: 0xfff21502, type: Button, buttonText: Locale.tr.play_button },
+      RightButton: { color: 0xfff21502, x: 250, type: Button, buttonText: `+ ${Locale.tr.my_list_button}` }
     };
   }
 

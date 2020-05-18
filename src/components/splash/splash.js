@@ -12,15 +12,15 @@ export default class Splash extends Lightning.Component {
         colorBottom: 0xff363358
       },
       Logo: {
-        w: 300,
-        h: 146,
+        w: 400,
+        h: 150,
         type: Logo,
         mount: 0.5,
         x: 960,
         y: 540,
         alpha: 0,
         transitions: { alpha: { duration: 1 }, scale: { duration: 1 } },
-        svgTexture: Utils.asset('images/t-mobile-logo.svg')
+        svgTexture: Utils.asset('images/ui/logo.svg')
       }
     };
   }

@@ -1,6 +1,7 @@
 {
   "en" :{
-    "playButton": "Play",
-    "myListButton": "My List"
+    "play_button": "Play",
+    "my_list_button": "My List",
+    "popular_now": "Popular Now"
   }
 }
