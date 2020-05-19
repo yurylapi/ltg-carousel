@@ -2,7 +2,7 @@ export const createPopularState = base =>
   class PopularState extends base {
     $enter() {
       this.tag('Popular').setSmooth('alpha', 1);
-      this.tag('Main').patch({
+      this.tag('TopMenu').patch({
         smooth: { alpha: 1, y: 0 }
       });
       // this.tag('Background').src = Utils.asset(src);
@@ -14,7 +14,7 @@ export const createPopularState = base =>
 
     $exit() {
       this.tag('Popular').setSmooth('alpha', 0);
-      this.tag('Main').patch({
+      this.tag('TopMenu').patch({
         smooth: { alpha: 0, y: 100 }
       });
       this.tag('Background').setSmooth('alpha', 0);

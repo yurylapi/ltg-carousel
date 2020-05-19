@@ -1,10 +1,11 @@
 import { Lightning, Utils, Locale } from 'wpe-lightning-sdk';
-import { Main, Splash, VideoPlayer, Details, Popular } from '../index';
+import { Splash, VideoPlayer, Details, Popular, TopMenu } from '../index';
+import { Api } from '@/lib';
 import { POPULAR_ITEMS } from '@/constants';
 import {
   createDetailsState,
   createErrorState,
-  createMainState,
+  createTopMenuState,
   createPopularState,
   createSplashState
 } from '@/components/app/states';
@@ -32,7 +33,7 @@ export default class App extends Lightning.Component {
     return {
       Splash: {
         type: Splash,
-        signals: { loaded: true },
+        signals: { animationFinished: true },
         alpha: 0
       },
       VideoPlayer: {
@@ -45,16 +46,21 @@ export default class App extends Lightning.Component {
         w: 1920,
         h: 1080,
         alpha: 0,
-        src: Utils.asset('images/thumb-1920-932618.jpg')
+        src: Utils.asset('images/ui/background.png')
       },
-      Main: {
-        type: Main,
+      TopMenu: {
+        type: TopMenu,
+        items: [
+          { label: 'TV Shows', action: 'tvShows' },
+          { label: 'Movies', action: 'movies' },
+          { label: 'Recently Added', action: 'recentlyAdded' }
+        ],
         alpha: 0,
         signals: { select: '_menuSelect' }
       },
       Details: {
         type: Details,
-        title: Utils.asset('titles/logo-game-of-thrones-png-7.png'),
+        title: Utils.asset('images/titles/logo-game-of-thrones-png-7.png'),
         rating: 98,
         year: '2011-2019',
         pgRating: 18,
@@ -71,6 +77,15 @@ export default class App extends Lightning.Component {
     };
   }
 
+  _construct() {
+    this._api = new Api();
+    this._data = null;
+  }
+
+  $api() {
+    return this._api;
+  }
+
   _setup() {
     this._setState('SplashState');
   }
@@ -83,10 +98,18 @@ export default class App extends Lightning.Component {
     return this._currentlyFocused;
   }
 
+  $onItemSelect({ item }) {
+    // slider signal on selected item
+  }
+
+  _saveApiData(data) {
+    this._data = data;
+  }
+
   static _states() {
     return [
       createSplashState(this),
-      createMainState(this),
+      createTopMenuState(this),
       createDetailsState(this),
       createPopularState(this),
       createErrorState(this)

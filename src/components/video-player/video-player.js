@@ -21,9 +21,9 @@ export default class VideoPlayer extends Lightning.Component {
         x: 100,
         y: 1000,
         PlayPause: {
-          src: Utils.asset('video-player/play.png')
+          src: Utils.asset('images/video-player/play.png')
         },
-        Skip: { x: 50, src: Utils.asset('video-player/skip.png') },
+        Skip: { x: 50, src: Utils.asset('images/video-player/skip.png') },
         ProgressBar: {
           type: ProgressBar,
           x: 150,
@@ -92,7 +92,7 @@ export default class VideoPlayer extends Lightning.Component {
       class LoadingState extends this {},
       class PlayingState extends this {
         $enter() {
-          this.tag('PlayPause').src = Utils.asset('video-player/pause.png');
+          this.tag('PlayPause').src = Utils.asset('images/video-player/pause.png');
         }
 
         /**
@@ -106,7 +106,7 @@ export default class VideoPlayer extends Lightning.Component {
       },
       class PausedState extends this {
         $enter() {
-          this.tag('PlayPause').src = Utils.asset('video-player/play.png');
+          this.tag('PlayPause').src = Utils.asset('images/video-player/play.png');
         }
 
         _handleEnter() {
