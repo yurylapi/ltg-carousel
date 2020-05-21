@@ -2,6 +2,7 @@
   {
     "id": 5,
     "label": "popular on tv",
+    "tag": "Popular",
     "data": [
       {
         "title":"Marvel's Agents of S.H.I.E.L.D.",

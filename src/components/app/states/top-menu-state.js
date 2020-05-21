@@ -1,31 +1,33 @@
+import { DETAILS_STATE, TAG_BACKGROUND, TAG_DETAILS, TAG_POPULAR, TAG_TOP_MENU, TOP_MENU_STATE } from '@/constants';
+
 export const createTopMenuState = base =>
   class TopMenuState extends base {
     $enter() {
-      this.tag('TopMenu').patch({
+      this.tag(TAG_TOP_MENU).patch({
         smooth: { alpha: 1, y: 0 }
       });
 
-      this.tag('Background').setSmooth('alpha', 1);
-      this.tag('Details').setSmooth('alpha', 1);
-      this.tag('Popular').setSmooth('alpha', 1);
+      this.tag(TAG_BACKGROUND).setSmooth('alpha', 1);
+      this.tag(TAG_DETAILS).setSmooth('alpha', 1);
+      this.tag(TAG_POPULAR).setSmooth('alpha', 1);
 
       this._currentlyFocused = this.tag('TopMenu');
     }
 
     $exit() {
-      this.tag('TopMenu').patch({
+      this.tag(TAG_TOP_MENU).patch({
         smooth: { alpha: 0, y: 100 }
       });
 
-      this.tag('Background').setSmooth('alpha', 0);
-      this.tag('Details').setSmooth('alpha', 0);
-      this.tag('Popular').setSmooth('alpha', 0);
+      this.tag(TAG_BACKGROUND).setSmooth('alpha', 0);
+      this.tag(TAG_DETAILS).setSmooth('alpha', 0);
+      this.tag(TAG_POPULAR).setSmooth('alpha', 0);
 
       this._currentlyFocused = null;
     }
 
     _handleDown() {
-      this._setState('DetailsState');
+      this._setState(DETAILS_STATE);
     }
 
     _menuSelect({ item }) {
@@ -35,15 +37,15 @@ export const createTopMenuState = base =>
     }
 
     tvShows() {
-      this._setState('TopMenuState.TvShowsState');
+      this._setState(`${TOP_MENU_STATE}.TvShowsState`);
     }
 
     movies() {
-      this._setState('TopMenuState.MoviesState');
+      this._setState(`${TOP_MENU_STATE}.MoviesState`);
     }
 
     recentlyAdded() {
-      this._setState('TopMenuState.RecentlyAddedState');
+      this._setState(`${TOP_MENU_STATE}.RecentlyAddedState`);
     }
 
     static _states() {

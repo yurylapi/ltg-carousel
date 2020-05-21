@@ -1,7 +1,7 @@
 import { Lightning, Utils, Locale } from 'wpe-lightning-sdk';
-import { Splash, VideoPlayer, Details, Popular, TopMenu } from '../index';
+import { Splash, VideoPlayer, Details, TopMenu, Slider } from '../index';
 import { Api } from '@/lib';
-import { POPULAR_ITEMS } from '@/constants';
+import { REF_MOVIES, REF_TV_SHOWS, SPLASH_STATE, TAG_BACKGROUND, TAG_POPULAR } from '@/constants';
 import {
   createDetailsState,
   createErrorState,
@@ -36,11 +36,6 @@ export default class App extends Lightning.Component {
         signals: { animationFinished: true },
         alpha: 0
       },
-      VideoPlayer: {
-        type: VideoPlayer,
-        alpha: 0,
-        signals: { videoEnded: '_videoEnded' }
-      },
       Background: {
         rect: true,
         w: 1920,
@@ -60,19 +55,22 @@ export default class App extends Lightning.Component {
       },
       Details: {
         type: Details,
-        title: Utils.asset('images/titles/logo-game-of-thrones-png-7.png'),
+        title: Utils.asset('tv/popular/gameofthrones/title.png'),
         rating: 98,
         year: '2011-2019',
         pgRating: 18,
         alpha: 0
       },
+      VideoPlayer: {
+        type: VideoPlayer,
+        alpha: 0,
+        signals: { videoEnded: '_videoEnded' }
+      },
       Popular: {
         x: 120,
-        y: 530,
-        type: Popular,
-        alpha: 0,
-        popularItems: POPULAR_ITEMS,
-        signals: { popularItemMedia: '_popularItemMedia', popularItemIntro: '_popularItemIntro' }
+        y: 520,
+        type: Slider,
+        alpha: 0
       }
     };
   }
@@ -87,7 +85,7 @@ export default class App extends Lightning.Component {
   }
 
   _setup() {
-    this._setState('SplashState');
+    this._setState(SPLASH_STATE);
   }
 
   _init() {
@@ -99,11 +97,33 @@ export default class App extends Lightning.Component {
   }
 
   $onItemSelect({ item }) {
-    // slider signal on selected item
+    this.tag(TAG_BACKGROUND).src = Utils.asset(`${item.path}/backdrop.jpg`);
   }
 
-  _saveApiData(data) {
+  set data(data) {
     this._data = data;
+  }
+
+  get data() {
+    return this._data;
+  }
+
+  get movies() {
+    return this.data.find(element => element.ref === REF_MOVIES).data;
+  }
+
+  get tvShows() {
+    return this.data.find(element => element.ref === REF_TV_SHOWS).data;
+  }
+
+  get popularTvShows() {
+    return this.tvShows.find(element => element.tag === TAG_POPULAR);
+  }
+
+  _populatePopularItems() {
+    this.tag(TAG_POPULAR).patch({
+      data: this.popularTvShows
+    });
   }
 
   static _states() {

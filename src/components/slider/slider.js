@@ -6,10 +6,12 @@ export default class Slider extends Lightning.Component {
     return {
       alpha: 0.5,
       Title: {
-        text: { text: '', fontSize: 40 }
+        y: 50,
+        text: { text: '', fontSize: 24 }
       },
       Items: {
-        y: 100
+        y: 70,
+        x: -15
       }
     };
   }
@@ -22,7 +24,7 @@ export default class Slider extends Lightning.Component {
       },
       Items: {
         children: data.map((item, idx) => {
-          return { type: SliderItem, x: idx * 350, item: item, scale: 0.9 };
+          return { type: SliderItem, x: idx * 300, item: item, scale: 0.9 };
         })
       }
     });
@@ -33,14 +35,14 @@ export default class Slider extends Lightning.Component {
   }
 
   _focus() {
+    this.tag('Title').setSmooth('y', 0);
     this.setSmooth('alpha', 1);
-    this._setState('Expanded');
     this._setIndex();
   }
 
   _unfocus() {
+    this.tag('Title').setSmooth('y', 50);
     this.setSmooth('alpha', 0.5);
-    this._setState('Collapsed');
   }
 
   get items() {
@@ -63,9 +65,7 @@ export default class Slider extends Lightning.Component {
     }
   }
 
-  _handleEnter() {
-    this.fireAncestors('$onItemSelect', { item: this.active.item });
-  }
+  _handleEnter() {}
 
   _setIndex(index = this._index) {
     this._index = index;
@@ -77,37 +77,11 @@ export default class Slider extends Lightning.Component {
   }
 
   _getFocused() {
+    this.fireAncestors('$onItemSelect', { item: this.active.item });
     return this.active;
   }
 
   static _states() {
-    return [
-      class Expanded extends this {
-        $enter() {
-          this.setSmooth('alpha', 1);
-          this.items.forEach((item, idx) => {
-            item.patch({
-              smooth: {
-                x: [idx * 440, { duration: 0.3, delay: idx * 0.04 }],
-                scale: 1
-              }
-            });
-          });
-        }
-      },
-      class Collapsed extends this {
-        $enter() {
-          this.setSmooth('alpha', 0.5);
-          this.items.forEach((item, idx) => {
-            item.patch({
-              smooth: {
-                x: [idx * 350, { duration: 0.3, delay: idx * 0.03 }],
-                scale: 0.9
-              }
-            });
-          });
-        }
-      }
-    ];
+    return [];
   }
 }

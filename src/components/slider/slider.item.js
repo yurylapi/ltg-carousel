@@ -5,8 +5,8 @@ export default class SliderItem extends Lightning.Component {
     return {
       rect: true,
       color: 0xffffffff,
-      w: 370,
-      h: 556,
+      w: 300,
+      h: 450,
       scale: 1,
       transitions: { scale: { duration: 0.3, delay: 0.05 } }
     };
@@ -24,6 +24,7 @@ export default class SliderItem extends Lightning.Component {
   }
 
   _focus() {
+    // this.fireAncestors('$changeMessage', this.item., this.buttonColor)
     this.setSmooth('scale', 1.1);
   }
 
