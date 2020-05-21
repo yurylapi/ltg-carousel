@@ -5,8 +5,8 @@ export default class SliderItem extends Lightning.Component {
     return {
       rect: true,
       color: 0xffffffff,
-      w: 300,
-      h: 450,
+      w: 385,
+      h: 556,
       scale: 1,
       transitions: { scale: { duration: 0.3, delay: 0.05 } }
     };

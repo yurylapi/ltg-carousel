@@ -24,7 +24,7 @@ export default class Slider extends Lightning.Component {
       },
       Items: {
         children: data.map((item, idx) => {
-          return { type: SliderItem, x: idx * 300, item: item, scale: 0.9 };
+          return { type: SliderItem, x: idx * 350, item: item, scale: 0.9 };
         })
       }
     });
@@ -37,12 +37,14 @@ export default class Slider extends Lightning.Component {
   _focus() {
     this.tag('Title').setSmooth('y', 0);
     this.setSmooth('alpha', 1);
+    this._setState('Expanded');
     this._setIndex();
   }
 
   _unfocus() {
     this.tag('Title').setSmooth('y', 50);
     this.setSmooth('alpha', 0.5);
+    this._setState('Collapsed');
   }
 
   get items() {
@@ -82,6 +84,33 @@ export default class Slider extends Lightning.Component {
   }
 
   static _states() {
-    return [];
+    return [
+      class Expanded extends this {
+        $enter() {
+          this.setSmooth('alpha', 1);
+          this.items.forEach((item, idx) => {
+            item.patch({
+              smooth: {
+                x: [idx * 440, { duration: 0.3, delay: idx * 0.04 }],
+                scale: 1
+              }
+            });
+          });
+        }
+      },
+      class Collapsed extends this {
+        $enter() {
+          this.setSmooth('alpha', 0.5);
+          this.items.forEach((item, idx) => {
+            item.patch({
+              smooth: {
+                x: [idx * 350, { duration: 0.3, delay: idx * 0.03 }],
+                scale: 0.9
+              }
+            });
+          });
+        }
+      }
+    ];
   }
 }
