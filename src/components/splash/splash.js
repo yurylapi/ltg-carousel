@@ -41,9 +41,11 @@ export default class Splash extends Lightning.Component {
       delay: 2,
       actions: [
         { t: 'Background', p: 'y', v: { 0.2: 0, 1: -550 } },
+        { t: 'Background', p: 'alpha', v: { 0.2: 0.8, 1: 0 } },
         { t: 'GrayBackdrop', p: 'rotation', v: { 0: -0.3, 1: 0 } },
         { t: 'GrayBackdrop', p: 'scale', v: { 0.6: 1.1, 1: 1 } },
         { t: 'GrayBackdrop', p: 'y', v: { 0: 1000, 1: 0 } },
+        { t: 'GrayBackdrop', p: 'x', v: { 0: 200, 1: 0 } },
         { t: 'GrayBackdrop', p: 'x', v: { 0: 200, 1: 0 } },
         { t: 'Logo', p: 'y', v: { 0: 714, 1: -400 } },
         { t: 'Logo', p: 'rotation', v: { 0: -0.3, 1: -0 } }

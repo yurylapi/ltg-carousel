@@ -26,10 +26,10 @@ export const createPopularState = base =>
     }
 
     _handleUp() {
-      this._setState(DETAILS_STATE, [{ intro: this._getCurrentlyActiveItemIntro() }]);
+      this._setState(DETAILS_STATE, [{ activeItem: this._getCurrentlyActiveItem() }]);
     }
 
-    _getCurrentlyActiveItemIntro() {
-      return this._currentlyFocused.active.item.intro;
+    _getCurrentlyActiveItem() {
+      return this._currentlyFocused.active.item;
     }
   };

@@ -36,14 +36,12 @@ export default class Slider extends Lightning.Component {
 
   _focus() {
     this.tag('Title').setSmooth('y', 0);
-    this.setSmooth('alpha', 1);
     this._setState('Expanded');
     this._setIndex();
   }
 
   _unfocus() {
     this.tag('Title').setSmooth('y', 50);
-    this.setSmooth('alpha', 0.5);
     this._setState('Collapsed');
   }
 
@@ -89,7 +87,6 @@ export default class Slider extends Lightning.Component {
     return [
       class Expanded extends this {
         $enter() {
-          this.setSmooth('alpha', 1);
           this.items.forEach((item, idx) => {
             item.patch({
               smooth: {
@@ -103,7 +100,6 @@ export default class Slider extends Lightning.Component {
       class Collapsed extends this {
         $enter() {
           const itemsLength = this.items.length - 1;
-          this.setSmooth('alpha', 0.5);
           this.items.forEach((item, idx) => {
             if (idx !== itemsLength) {
               item.patch({

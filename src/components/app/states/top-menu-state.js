@@ -27,7 +27,7 @@ export const createTopMenuState = base =>
     }
 
     _handleDown() {
-      this._setState(DETAILS_STATE, [{ intro: this.activeItem.intro }]);
+      this._setState(DETAILS_STATE, [{ activeItem: this.activeItem }]);
     }
 
     _menuSelect({ item }) {

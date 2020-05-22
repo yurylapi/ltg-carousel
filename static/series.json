@@ -6,11 +6,12 @@
     "data": [
       {
         "title":"Marvel's Agents of S.H.I.E.L.D.",
+        "imageTitle": "tv/titles/0/0.png",
         "year":"2013",
         "path":"tv/popular/agentsofshield",
-        "intro": "video/Winter-Is-Coming-Stark-Game-Of-Thrones-Live-Wallpaper.mp4",
-        "rating": 98,
-        "pgRating": 18,
+        "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "rating": 92,
+        "pgRating": 13,
         "id":1,
         "cat":5,
         "cast":[
@@ -20,14 +21,81 @@
           4,
           5
         ],
-        "info":"Agent Phil Coulson of S.H.I.E.L.D. (Strategic Homeland Intervention, Enforcement and Logistics Division) puts together a team of agents to investigate the new, the strange and the unknown around the globe, protecting the ordinary from the extraordinary."
+        "info":"Agent Phil Coulson of S.H.I.E.L.D. (Strategic Homeland Intervention, Enforcement and Logistics Division) puts together a team of agents to investigate the new, the strange and the unknown around the globe, protecting the ordinary from the extraordinary.",
+        "seasons": [
+          {
+            "label": "Season 1",
+            "id": "1",
+            "itemWidth": 415,
+            "itemHeight": 238,
+            "items": [
+              {
+                "id": "1",
+                "title": "Trailer",
+                "subTitle": "Trailer",
+                "thumbnail": "tv/seasons/0/6.jpg",
+                "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+                "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+              },
+              {
+                "id": "2",
+                "subTitle": "01",
+                "title": "Dragonstone 1",
+                "thumbnail": "tv/seasons/0/6.jpg",
+                "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+                "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+              },
+              {
+                "id": "3",
+                "subTitle": "02",
+                "title": "Dragonstone 2",
+                "thumbnail": "tv/seasons/0/6.jpg",
+                "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+                "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+              },
+              {
+                "id": "4",
+                "subTitle": "03",
+                "title": "Dragonstone 3",
+                "thumbnail": "tv/seasons/0/6.jpg",
+                "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+                "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+              },
+              {
+                "id": "5",
+                "subTitle": "04",
+                "title": "Dragonstone 4",
+                "thumbnail": "tv/seasons/0/6.jpg",
+                "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+                "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+              },
+              {
+                "id": "6",
+                "subTitle": "05",
+                "title": "Dragonstone 5",
+                "thumbnail": "tv/seasons/0/6.jpg",
+                "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+                "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+              },
+              {
+                "id": "7",
+                "subTitle": "06",
+                "title": "Dragonstone 6",
+                "thumbnail": "tv/seasons/0/6.jpg",
+                "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+                "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+              }
+            ]
+          }
+        ]
       },
       {
         "title":"Arrow",
+        "imageTitle": "tv/titles/0/1.png",
         "year":"2012",
         "path":"tv/popular/arrow",
-        "intro": "video/Winter-Is-Coming-Stark-Game-Of-Thrones-Live-Wallpaper.mp4",
-        "rating": 98,
+        "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "rating": 67,
         "pgRating": 18,
         "id":2,
         "cat":5,
@@ -42,11 +110,12 @@
       },
       {
         "title":"The Blacklist",
+        "imageTitle": "tv/titles/0/2.png",
         "year":"2013",
         "path":"tv/popular/blacklist",
-        "intro": "video/Winter-Is-Coming-Stark-Game-Of-Thrones-Live-Wallpaper.mp4",
-        "rating": 98,
-        "pgRating": 18,
+        "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        "rating": 90,
+        "pgRating": 0,
         "id":3,
         "cat":5,
         "cast":[
@@ -60,11 +129,12 @@
       },
       {
         "title":"Brooklyn Nine-Nine",
+        "imageTitle": "tv/titles/0/3.png",
         "year":"2013",
         "path":"tv/popular/brooklyn",
-        "intro": "video/Winter-Is-Coming-Stark-Game-Of-Thrones-Live-Wallpaper.mp4",
-        "rating": 98,
-        "pgRating": 18,
+        "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+        "rating": 57,
+        "pgRating": 16,
         "id":4,
         "cat":5,
         "cast":[
@@ -78,9 +148,10 @@
       },
       {
         "title":"Game of Thrones",
+        "imageTitle": "tv/titles/0/4.png",
         "year":"2011",
         "path":"tv/popular/got",
-        "intro": "video/Winter-Is-Coming-Stark-Game-Of-Thrones-Live-Wallpaper.mp4",
+        "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
         "rating": 98,
         "pgRating": 18,
         "id":5,
@@ -96,11 +167,12 @@
       },
       {
         "title":"Lucifer",
+        "imageTitle": "tv/titles/0/5.png",
         "year":"2016",
         "path":"tv/popular/lucifer",
-        "intro": "video/Winter-Is-Coming-Stark-Game-Of-Thrones-Live-Wallpaper.mp4",
-        "rating": 98,
-        "pgRating": 18,
+        "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+        "rating": 78,
+        "pgRating": 13,
         "id":6,
         "cat":5,
         "cast":[
@@ -114,11 +186,12 @@
       },
       {
         "title":"The Flash",
+        "imageTitle": "tv/titles/0/6.png",
         "year":"2014",
         "path":"tv/popular/theflash",
-        "intro": "video/Winter-Is-Coming-Stark-Game-Of-Thrones-Live-Wallpaper.mp4",
-        "rating": 98,
-        "pgRating": 18,
+        "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+        "rating": 89,
+        "pgRating": 8,
         "id":7,
         "cat":5,
         "cast":[
@@ -132,11 +205,12 @@
       },
       {
         "title":"Marvel's Agents of S.H.I.E.L.D.",
+        "imageTitle": "tv/titles/0/7.png",
         "year":"2013",
         "path":"tv/popular/agentsofshield",
-        "intro": "video/Winter-Is-Coming-Stark-Game-Of-Thrones-Live-Wallpaper.mp4",
-        "rating": 98,
-        "pgRating": 18,
+        "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+        "rating": 75,
+        "pgRating": 12,
         "id":1,
         "cat":5,
         "cast":[
@@ -150,11 +224,12 @@
       },
       {
         "title":"The Blacklist",
+        "imageTitle": "tv/titles/0/8.png",
         "year":"2013",
         "path":"tv/popular/blacklist",
-        "intro": "video/Winter-Is-Coming-Stark-Game-Of-Thrones-Live-Wallpaper.mp4",
-        "rating": 98,
-        "pgRating": 18,
+        "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4",
+        "rating": 70,
+        "pgRating": 8,
         "id":3,
         "cat":5,
         "cast":[

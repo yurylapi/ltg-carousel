@@ -1,7 +1,15 @@
 import { Lightning, Utils, Locale } from 'wpe-lightning-sdk';
-import { Splash, VideoPlayer, Details, TopMenu, Slider } from '../index';
+import { VideoPlayer, Details, TopMenu, Slider, Seasons, Splash } from '../index';
 import { Api } from '@/lib';
-import { REF_MOVIES, REF_TV_SHOWS, SPLASH_STATE, TAG_BACKGROUND, TAG_DETAILS, TAG_POPULAR } from '@/constants';
+import {
+  REF_MOVIES,
+  REF_TV_SHOWS,
+  SPLASH_STATE,
+  TAG_BACKGROUND,
+  TAG_DETAILS,
+  TAG_POPULAR,
+  TAG_SEASONS
+} from '@/constants';
 import {
   createDetailsState,
   createErrorState,
@@ -54,7 +62,8 @@ export default class App extends Lightning.Component {
         signals: { select: '_menuSelect' }
       },
       Details: {
-        y: 240,
+        y: 150,
+        x: 100,
         type: Details,
         alpha: 0
       },
@@ -63,9 +72,15 @@ export default class App extends Lightning.Component {
         alpha: 0,
         signals: { videoEnded: '_videoEnded' }
       },
+      Seasons: {
+        alpha: 0,
+        y: 500,
+        x: 100,
+        type: Seasons
+      },
       Popular: {
-        x: 120,
-        y: 370,
+        x: 100,
+        y: 550,
         type: Slider,
         alpha: 0
       }
@@ -133,6 +148,15 @@ export default class App extends Lightning.Component {
     });
   }
 
+  _populateSeasons() {
+    const season = this.activeItem.seasons[0];
+    this.tag(TAG_SEASONS).patch({
+      itemSize: { w: season.itemWidth, h: season.itemHeight },
+      items: season.items,
+      label: season.label
+    });
+  }
+
   _populateDetailsData() {
     this.tag(TAG_DETAILS).data = this.activeItem;
   }
@@ -144,6 +168,18 @@ export default class App extends Lightning.Component {
       createDetailsState(this),
       createPopularState(this),
       createErrorState(this)
+      // class SeasonsState extends this {
+      //   $enter() {
+      //     this.tag(TAG_SEASONS).setSmooth('alpha', 1);
+      //     this._currentlyFocused = this.tag(TAG_SEASONS);
+      //   }
+      //
+      //   $exit() {
+      //     this.tag(TAG_SEASONS).setSmooth('alpha', 0);
+      //     this._currentlyFocused = null;
+      //   }
+      // },
+      // class VideoPlayerState extends this {}
     ];
   }
 }

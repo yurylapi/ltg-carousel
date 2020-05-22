@@ -10,15 +10,15 @@ export const createSplashState = base =>
         this.activeItem = this.popularTvShows.data[0];
         this._populatePopularItems();
         this._populateDetailsData();
+        this._populateSeasons();
       });
     }
 
     $exit() {
       this.tag(TAG_SPLASH).setSmooth('alpha', 0);
-      this.tag(TAG_BACKGROUND).setSmooth('alpha', 0);
     }
 
     animationFinished() {
-      this._setState(DETAILS_STATE, [{ intro: this.activeItem.intro }]);
+      this._setState(DETAILS_STATE, [{ activeItem: this.activeItem }]);
     }
   };

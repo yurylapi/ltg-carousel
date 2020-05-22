@@ -57,7 +57,7 @@ export default class VideoPlayer extends Lightning.Component {
   }
 
   stop() {
-    this.tag('MediaPlayer').doPause();
+    this.tag('MediaPlayer').close();
   }
 
   /**

@@ -24,7 +24,6 @@ export default class SliderItem extends Lightning.Component {
   }
 
   _focus() {
-    // this.fireAncestors('$changeMessage', this.item., this.buttonColor)
     this.setSmooth('scale', 1.1);
   }
 

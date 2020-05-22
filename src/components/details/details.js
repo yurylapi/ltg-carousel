@@ -1,40 +1,50 @@
-import { Lightning } from 'wpe-lightning-sdk';
+import { Lightning, Utils } from 'wpe-lightning-sdk';
 import DetailsControls from './details.controls';
 
 export default class Details extends Lightning.Component {
   static _template() {
     return {
-      Rating: {
-        x: 120,
-        text: {
-          fontFace: 'Regular',
-          fontSize: 24,
-          fontStyle: 'bold'
-        }
+      ImageTitle: {
+        w: 720
       },
-      Year: {
-        x: 270,
-        text: {
-          fontFace: 'Regular',
-          fontSize: 24
-        }
-      },
-      PGRating: {
-        x: 420,
-        zIndex: 1,
-        text: {
-          fontFace: 'Regular',
-          fontSize: 24
+      Info: {
+        y: 180,
+        flex: { direction: 'row', padding: 20, wrap: false, justifyContent: 'space-between' },
+        w: 500,
+        Rating: {
+          flexItem: { margin: 10 },
+          text: {
+            fontFace: 'Regular',
+            fontSize: 24,
+            fontStyle: 'bold',
+            fontAlign: 'center'
+          }
         },
-        RatingBorder: {
-          zIndex: 0,
-          x: -8,
-          texture: Lightning.Tools.getRoundRect(53, 30, 4, 1, 0xffffffff, true, 0x00ffffff)
+        Year: {
+          flexItem: { margin: 10 },
+          text: {
+            fontFace: 'Regular',
+            fontSize: 24,
+            fontAlign: 'center'
+          }
+        },
+        PGRating: {
+          flexItem: { margin: 10 },
+          zIndex: 1,
+          text: {
+            fontFace: 'Regular',
+            fontSize: 24,
+            fontAlign: 'center'
+          },
+          RatingBorder: {
+            zIndex: 0,
+            x: -8,
+            texture: Lightning.Tools.getRoundRect(53, 30, 4, 1, 0xffffffff, true, 0x00ffffff)
+          }
         }
       },
       DetailsControls: {
-        x: 120,
-        y: 50,
+        y: 280,
         type: DetailsControls
       }
     };
@@ -63,16 +73,29 @@ export default class Details extends Lightning.Component {
     this._setState('AddMyListState');
   }
 
-  _updateDetails({ path, cast, title, year, info, rating, pgRating }) {
+  _updateDetails({ path, cast, year, info, rating, pgRating, imageTitle }) {
     this.patch({
-      Rating: {
-        text: { text: `${rating}% Match` }
+      ImageTitle: {
+        texture: {
+          resizeMode: {
+            type: 'contain',
+            w: 720,
+            h: 250
+          },
+          type: Lightning.textures.ImageTexture,
+          src: Utils.asset(imageTitle)
+        }
       },
-      Year: {
-        text: { text: year }
-      },
-      PGRating: {
-        text: { text: `${pgRating}+` }
+      Info: {
+        Rating: {
+          text: { text: `${rating}% Match` }
+        },
+        Year: {
+          text: { text: year }
+        },
+        PGRating: {
+          text: { text: `${pgRating}+` }
+        }
       }
     });
   }
