@@ -54,6 +54,10 @@ export default class TopMenu extends Lightning.Component {
     this._setIndex(Math.min(++this._index, this.items.length - 1));
   }
 
+  _handleEnter() {
+    this.signal('select', { item: this.activeItem });
+  }
+
   _setIndex(idx) {
     this._index = idx;
   }

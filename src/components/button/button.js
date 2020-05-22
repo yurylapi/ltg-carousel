@@ -13,6 +13,14 @@ export default class Button extends Lightning.Component {
     };
   }
 
+  set action(action) {
+    this._action = action;
+  }
+
+  get action() {
+    return this._action;
+  }
+
   _init() {
     this.tag('Label').patch({ text: { text: this.buttonText } });
   }

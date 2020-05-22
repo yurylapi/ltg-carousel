@@ -27,7 +27,7 @@ export const createTopMenuState = base =>
     }
 
     _handleDown() {
-      this._setState(DETAILS_STATE);
+      this._setState(DETAILS_STATE, [{ intro: this.activeItem.intro }]);
     }
 
     _menuSelect({ item }) {
@@ -36,15 +36,15 @@ export const createTopMenuState = base =>
       }
     }
 
-    tvShows() {
+    tvShowsAction() {
       this._setState(`${TOP_MENU_STATE}.TvShowsState`);
     }
 
-    movies() {
+    moviesAction() {
       this._setState(`${TOP_MENU_STATE}.MoviesState`);
     }
 
-    recentlyAdded() {
+    recentlyAddedAction() {
       this._setState(`${TOP_MENU_STATE}.RecentlyAddedState`);
     }
 

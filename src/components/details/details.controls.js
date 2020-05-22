@@ -4,8 +4,14 @@ import { Button } from '@/components';
 export default class DetailsControls extends Lightning.Component {
   static _template() {
     return {
-      LeftButton: { color: 0xfff21502, type: Button, buttonText: Locale.tr.play_button },
-      RightButton: { color: 0xfff21502, x: 250, type: Button, buttonText: `+ ${Locale.tr.my_list_button}` }
+      PlayButton: { color: 0xfff21502, type: Button, action: 'playAction', buttonText: Locale.tr.play_button },
+      AddMyListButton: {
+        color: 0xfff21502,
+        x: 250,
+        type: Button,
+        action: 'addMyListAction',
+        buttonText: `+ ${Locale.tr.my_list_button}`
+      }
     };
   }
 
@@ -23,9 +29,17 @@ export default class DetailsControls extends Lightning.Component {
     }
   }
 
+  get activeControl() {
+    return this.children[this.index];
+  }
+
   _handleRight() {
     if (this.index < this.children.length - 1) {
       this.index++;
     }
+  }
+
+  _handleEnter() {
+    this.fireAncestors('$onControlSelected', { control: this.activeControl });
   }
 }

@@ -1,7 +1,7 @@
 import { Lightning, Utils, Locale } from 'wpe-lightning-sdk';
 import { Splash, VideoPlayer, Details, TopMenu, Slider } from '../index';
 import { Api } from '@/lib';
-import { REF_MOVIES, REF_TV_SHOWS, SPLASH_STATE, TAG_BACKGROUND, TAG_POPULAR } from '@/constants';
+import { REF_MOVIES, REF_TV_SHOWS, SPLASH_STATE, TAG_BACKGROUND, TAG_DETAILS, TAG_POPULAR } from '@/constants';
 import {
   createDetailsState,
   createErrorState,
@@ -46,19 +46,16 @@ export default class App extends Lightning.Component {
       TopMenu: {
         type: TopMenu,
         items: [
-          { label: 'TV Shows', action: 'tvShows' },
-          { label: 'Movies', action: 'movies' },
-          { label: 'Recently Added', action: 'recentlyAdded' }
+          { label: 'TV Shows', action: 'tvShowsActions' },
+          { label: 'Movies', action: 'moviesAction' },
+          { label: 'Recently Added', action: 'recentlyAddedAction' }
         ],
         alpha: 0,
         signals: { select: '_menuSelect' }
       },
       Details: {
+        y: 240,
         type: Details,
-        title: Utils.asset('tv/popular/gameofthrones/title.png'),
-        rating: 98,
-        year: '2011-2019',
-        pgRating: 18,
         alpha: 0
       },
       VideoPlayer: {
@@ -68,7 +65,7 @@ export default class App extends Lightning.Component {
       },
       Popular: {
         x: 120,
-        y: 520,
+        y: 370,
         type: Slider,
         alpha: 0
       }
@@ -78,6 +75,7 @@ export default class App extends Lightning.Component {
   _construct() {
     this._api = new Api();
     this._data = null;
+    this._activeItem = null;
   }
 
   $api() {
@@ -96,7 +94,8 @@ export default class App extends Lightning.Component {
     return this._currentlyFocused;
   }
 
-  $onItemSelect({ item }) {
+  $onItemFocus({ item }) {
+    this.tag(TAG_DETAILS).data = item;
     this.tag(TAG_BACKGROUND).src = Utils.asset(`${item.path}/backdrop.jpg`);
   }
 
@@ -106,6 +105,14 @@ export default class App extends Lightning.Component {
 
   get data() {
     return this._data;
+  }
+
+  set activeItem(item) {
+    this._activeItem = item;
+  }
+
+  get activeItem() {
+    return this._activeItem;
   }
 
   get movies() {
@@ -124,6 +131,10 @@ export default class App extends Lightning.Component {
     this.tag(TAG_POPULAR).patch({
       data: this.popularTvShows
     });
+  }
+
+  _populateDetailsData() {
+    this.tag(TAG_DETAILS).data = this.activeItem;
   }
 
   static _states() {

@@ -67,7 +67,9 @@ export default class Slider extends Lightning.Component {
     }
   }
 
-  _handleEnter() {}
+  _handleEnter() {
+    this.fireAncestors('$onItemSelect', { item: this.active.item });
+  }
 
   _setIndex(index = this._index) {
     this._index = index;
@@ -79,7 +81,7 @@ export default class Slider extends Lightning.Component {
   }
 
   _getFocused() {
-    this.fireAncestors('$onItemSelect', { item: this.active.item });
+    this.fireAncestors('$onItemFocus', { item: this.active.item });
     return this.active;
   }
 
@@ -100,14 +102,23 @@ export default class Slider extends Lightning.Component {
       },
       class Collapsed extends this {
         $enter() {
+          const itemsLength = this.items.length - 1;
           this.setSmooth('alpha', 0.5);
           this.items.forEach((item, idx) => {
-            item.patch({
-              smooth: {
-                x: [idx * 350, { duration: 0.3, delay: idx * 0.03 }],
-                scale: 0.9
-              }
-            });
+            if (idx !== itemsLength) {
+              item.patch({
+                smooth: {
+                  x: [idx * 350, { duration: 0.3, delay: idx * 0.03 }],
+                  scale: 0.9
+                }
+              });
+            } else {
+              item.patch({
+                smooth: {
+                  scale: 0.9
+                }
+              });
+            }
           });
         }
       }
