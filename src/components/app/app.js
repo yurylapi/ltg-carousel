@@ -61,7 +61,6 @@ export default class App extends Lightning.Component {
     return this._currentlyFocused;
   }
 
-  // private methods
   _getMovies() {
     return this._data.find(element => element.ref === REF_MOVIES).data;
   }
@@ -105,9 +104,7 @@ export default class App extends Lightning.Component {
       }
     });
   }
-  // private methods
 
-  // setters/getters
   set data(data) {
     this._data = data;
   }
@@ -124,7 +121,6 @@ export default class App extends Lightning.Component {
   get activeItem() {
     return this._activeItem;
   }
-  // setters/getters
 
   static _states() {
     return [createSplashState(this), createTopMenuState(this), createDetailsState(this), createErrorState(this)];
