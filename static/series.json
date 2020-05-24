@@ -57,60 +57,67 @@
             "itemHeight": 290,
             "items": [
               {
-                "id": "1",
+                "id": 0,
                 "title": "Trailer",
                 "subTitle": "Trailer",
-                "thumbnail": "tv/seasons/0/0.jpg",
+                "thumbnail": "tv/popular/agentsofshield/seasons/0/thumbnail-0.jpg",
+                "episodeBackground": "tv/popular/agentsofshield/seasons/0/episodes/0.jpg",
                 "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
                 "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
               },
               {
-                "id": "2",
+                "id": 1,
                 "subTitle": "01",
                 "title": "Dragonstone 1",
-                "thumbnail": "tv/seasons/0/0.jpg",
-                "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-                "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+                "thumbnail": "tv/popular/agentsofshield/seasons/0/thumbnail-0.jpg",
+                "episodeBackground": "tv/popular/agentsofshield/seasons/0/episodes/1.jpg",
+                "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+                "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
               },
               {
-                "id": "3",
+                "id": 2,
                 "subTitle": "02",
                 "title": "Dragonstone 2",
-                "thumbnail": "tv/seasons/0/0.jpg",
-                "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-                "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+                "thumbnail": "tv/popular/agentsofshield/seasons/0/thumbnail-0.jpg",
+                "episodeBackground": "tv/popular/agentsofshield/seasons/0/episodes/2.jpg",
+                "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+                "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
               },
               {
-                "id": "4",
+                "id": 3,
                 "subTitle": "03",
                 "title": "Dragonstone 3",
-                "thumbnail": "tv/seasons/0/0.jpg",
-                "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-                "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+                "thumbnail": "tv/popular/agentsofshield/seasons/0/thumbnail-0.jpg",
+                "episodeBackground": "tv/popular/agentsofshield/seasons/0/episodes/3.jpg",
+                "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+                "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
               },
               {
-                "id": "5",
+                "id": 4,
                 "subTitle": "04",
                 "title": "Dragonstone 4",
-                "thumbnail": "tv/seasons/0/0.jpg",
-                "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-                "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+                "thumbnail": "tv/popular/agentsofshield/seasons/0/thumbnail-0.jpg",
+                "episodeBackground": "tv/popular/agentsofshield/seasons/0/episodes/4.jpg",
+                "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+                "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
               },
               {
-                "id": "6",
+                "id": 5,
                 "subTitle": "05",
                 "title": "Dragonstone 5",
-                "thumbnail": "tv/seasons/0/0.jpg",
-                "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-                "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+                "thumbnail": "tv/popular/agentsofshield/seasons/0/thumbnail-0.jpg",
+                "episodeBackground": "tv/popular/agentsofshield/seasons/0/episodes/5.jpg",
+                "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+                "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
               },
               {
-                "id": "7",
+                "id": 6,
                 "subTitle": "06",
                 "title": "Dragonstone 6",
-                "thumbnail": "tv/seasons/0/0.jpg",
-                "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-                "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+                "thumbnail": "tv/popular/agentsofshield/seasons/0/thumbnail-0.jpg",
+                "episodeBackground": "tv/popular/agentsofshield/seasons/0/episodes/6.jpg",
+                "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+                "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
               }
             ]
           }

@@ -1,7 +1,7 @@
 import { Lightning, Utils, Locale } from 'wpe-lightning-sdk';
-import { Details, TopMenu, Splash} from '../index';
+import { Details, TopMenu, Splash } from '../index';
 import { Api } from '@/lib';
-import {REF_MOVIES, REF_TOP_MENU, REF_TV_SHOWS, SPLASH_STATE, TAG_POPULAR, TAG_TOP_MENU} from '@/constants';
+import { REF_MOVIES, REF_TOP_MENU, REF_TV_SHOWS, SPLASH_STATE, TAG_POPULAR, TAG_TOP_MENU } from '@/constants';
 import { createDetailsState, createErrorState, createTopMenuState, createSplashState } from '@/components/app/states';
 
 export default class App extends Lightning.Component {
@@ -101,7 +101,7 @@ export default class App extends Lightning.Component {
       Details: {
         popularItems: this._getPopularTvShows(),
         episodes: this._getSeasonEpisodes(),
-        activeItem: this.activeItem
+        details: this.activeItem
       }
     });
   }

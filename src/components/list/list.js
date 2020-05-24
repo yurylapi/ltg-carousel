@@ -31,6 +31,14 @@ export default class List extends Lightning.Component {
     }
   }
 
+  _handleEnter() {
+    this.fireAncestors('$onItemSelect', { item: this.activeItem.item });
+  }
+
+  _getFocused() {
+    return this.activeItem;
+  }
+
   setIndex(index) {
     const prevIndex = this._index;
     this._index = index;
@@ -90,10 +98,6 @@ export default class List extends Lightning.Component {
 
   get activeItem() {
     return this.items[this._index];
-  }
-
-  _getFocused() {
-    return this.activeItem;
   }
 
   _getVisibleItemsOnScreen() {

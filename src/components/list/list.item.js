@@ -25,6 +25,7 @@ export default class ListItem extends Lightning.Component {
   }
 
   _focus() {
+    this.fireAncestors('$onItemFocus', { item: this._item });
     this.tag('Focus').setSmooth('borderWidth', 6);
     this.patch({
       smooth: {

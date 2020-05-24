@@ -1,7 +1,7 @@
 import { Lightning, Utils } from 'wpe-lightning-sdk';
 import DetailsControls from './details.controls';
 import { Cast, List, Slider, VideoPlayer } from '@/components';
-import {TAG_BACKGROUND, TAG_DETAILS, TAG_VIDEO_PLAYER} from '@/constants';
+import { TAG_BACKGROUND, TAG_DETAILS, TAG_VIDEO_PLAYER } from '@/constants';
 import DetailsInfo from '@/components/details/details.info';
 
 export default class Details extends Lightning.Component {
@@ -54,9 +54,10 @@ export default class Details extends Lightning.Component {
 
   _setup() {
     this._currentlyFocused = null;
+    this._registerAnimations();
   }
 
-  _init() {
+  _firstEnable() {
     this._setState('DetailsControlState');
   }
 
@@ -64,9 +65,118 @@ export default class Details extends Lightning.Component {
     return this._currentlyFocused;
   }
 
-  $onEpisodeItemFocus({ item }) {
-    // this._updateVideo(item.intro);
-    this._updateBackground(item.path);
+  /**
+   * @param {{
+   *  id: Number,
+   *  subTitle: String,
+   *  thumbnail: String,
+   *  episodeBackground: String,
+   *  intro: String,
+   *  video: String
+   * }} item
+   */
+  $onItemFocus({ item }) {
+    this.tag(TAG_VIDEO_PLAYER).stop();
+    this._backgroundToVideo.stop();
+    this._updateBackground(item.episodeBackground);
+    this.activeVideo = item.intro;
+    this._backgroundToVideo.start();
+  }
+
+  /**
+   * Register animations
+   *
+   * @private
+   */
+  _registerAnimations() {
+    this._backgroundToVideoAnimation();
+    this._videoToBackgroundAnimation();
+    this._backgroundToVideoSubscriber();
+  }
+
+  /**
+   * Changing opacity between background and video player
+   *
+   * @private
+   */
+  _backgroundToVideoAnimation() {
+    this._backgroundToVideo = this.animation({
+      duration: 5,
+      repeat: 0,
+      stopMethod: 'immediate',
+      actions: [
+        { t: TAG_BACKGROUND, p: 'alpha', v: { 0: 1, 0.5: 0.5, 1: 0 } },
+        { t: TAG_VIDEO_PLAYER, p: 'alpha', v: { 0: 0, 0.5: 0.5, 1: 1 } }
+      ]
+    });
+  }
+
+  /**
+   * Changing opacity between video player and background
+   *
+   * @private
+   */
+  _videoToBackgroundAnimation() {
+    this._videoToBackground = this.animation({
+      duration: 2,
+      repeat: 0,
+      stopMethod: 'immediate',
+      actions: [
+        { t: TAG_VIDEO_PLAYER, p: 'alpha', v: { 0: 1, 0.5: 0.5, 1: 0 } },
+        { t: TAG_BACKGROUND, p: 'alpha', v: { 0: 0, 0.5: 0.5, 1: 1 } }
+      ]
+    });
+  }
+
+  /**
+   * @private
+   */
+  _backgroundToVideoSubscriber() {
+    this._backgroundToVideo.on('finish', () => {
+      this._playVideo();
+    });
+  }
+
+  _playVideo() {
+    this.tag(TAG_VIDEO_PLAYER).play(this.activeVideo);
+  }
+
+  /**
+   * @param {String} src
+   * @private
+   */
+  _updateBackground(src) {
+    this.tag(TAG_BACKGROUND).src = Utils.asset(src);
+  }
+
+  /**
+   * @type {Object} episodes
+   * @property {String} label
+   * @property {Array} items
+   * @property {Number} itemWidth
+   * @property {Number} itemHeight
+   * @private
+   */
+  _populateEpisodes(episodes) {
+    this.tag('Episodes').patch({
+      label: episodes.label,
+      itemSize: { w: episodes.itemWidth, h: episodes.itemHeight },
+      items: episodes.items
+    });
+  }
+
+  /**
+   * @param {{ label: String, items: Array, itemWidth: Number, itemHeight: Number }} cast
+   * @param {String} path
+   * @private
+   */
+  _populateCast(cast, path) {
+    this.tag('Cast').patch({
+      label: cast.label,
+      itemSize: { w: cast.itemWidth, h: cast.itemHeight },
+      path,
+      items: cast.items
+    });
   }
 
   /**
@@ -83,71 +193,46 @@ export default class Details extends Lightning.Component {
   _updateDetails({ path, cast, year, info, rating, pgRating, imageTitle, intro }) {
     this.tag('DetailsInfo').info = { year, rating, pgRating, imageTitle };
     this._populateCast(cast, path);
-    // this._updateVideo(intro);
+    this.activeVideo = intro;
     this._updateBackground(`${path}/backdrop.jpg`);
   }
 
-  // _updateVideo(intro) {
-  //   this.tag('VideoPlayer').play(intro);
-  // }
-
-  _updateBackground(src) {
-    this.tag(TAG_BACKGROUND).src = Utils.asset(src);
-  }
-
   /**
-   * @type {Object} episodes
-   * @property {String} label
-   * @property {Array} items
-   * @property {Number} itemWidth
-   * @property {Number} itemHeight
-   * @private
+   * @param {{
+   *  path: String,
+   *  cast: Object,
+   *  year: String,
+   *  info: String,
+   *  rating: Number,
+   *  pgRating: String,
+   *  imageTitle: String,
+   *  intro: String
+   * }} item
    */
-  _updateEpisodes(episodes) {
-    this.tag('Episodes').patch({
-      label: episodes.label,
-      itemSize: { w: episodes.itemWidth, h: episodes.itemHeight },
-      items: episodes.items
-    });
-  }
-
-  _populateCast(cast, path) {
-    this.tag('Cast').patch({
-      label: cast.label,
-      itemSize: { w: cast.itemWidth, h: cast.itemHeight },
-      path,
-      items: cast.items
-    });
-  }
-
-  // setters/getters
-  set activeItem(item) {
-    this._activeItem = item;
+  set details(item) {
     this._updateDetails(item);
   }
 
-  get activeItem() {
-    return this._activeItem;
-  }
-
+  /**
+   * @param {Object[]} popularItems
+   */
   set popularItems(popularItems) {
     this._popularItems = popularItems;
   }
 
+  /**
+   * @returns {Object[]}
+   */
   get popularItems() {
     return this._popularItems;
   }
 
   /**
-   * @type {Object} episodes
-   * @property {String} label
-   * @property {Array} items
-   * @property {Number} itemWidth
-   * @property {Number} itemHeight
+   * @param {{ items: Array, label: String, itemWidth: Number, itemHeight: Number }} episodes
    */
   set episodes(episodes) {
     this._episodes = episodes;
-    this._updateEpisodes(episodes);
+    this._populateEpisodes(episodes);
   }
 
   /**
@@ -156,7 +241,14 @@ export default class Details extends Lightning.Component {
   get episodes() {
     return this._episodes;
   }
-  // setters/getters
+
+  set activeVideo(video) {
+    this._activeVideo = video;
+  }
+
+  get activeVideo() {
+    return this._activeVideo;
+  }
 
   static _states() {
     return [
@@ -165,12 +257,15 @@ export default class Details extends Lightning.Component {
           this._currentlyFocused = this.tag('DetailsControls');
           this.tag('Episodes').setSmooth('alpha', 1);
           this.tag(TAG_BACKGROUND).setSmooth('alpha', 1);
+          this._backgroundToVideo.start();
         }
 
         $exit() {
           this._currentlyFocused = null;
           this.tag('Episodes').setSmooth('alpha', 0);
           this.tag(TAG_BACKGROUND).setSmooth('alpha', 0);
+          this._backgroundToVideo.stop();
+          this.tag(TAG_VIDEO_PLAYER).stop();
         }
 
         _handleDown() {
@@ -178,7 +273,7 @@ export default class Details extends Lightning.Component {
         }
 
         _videoEnded() {
-          this.tag(TAG_BACKGROUND).setSmooth('alpha', 1);
+          this._videoToBackground.start();
         }
       },
       class EpisodesState extends this {
