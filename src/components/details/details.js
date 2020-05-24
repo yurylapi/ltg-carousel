@@ -1,110 +1,243 @@
 import { Lightning, Utils } from 'wpe-lightning-sdk';
 import DetailsControls from './details.controls';
+import { Cast, List, Slider, VideoPlayer } from '@/components';
+import {TAG_BACKGROUND, TAG_DETAILS, TAG_VIDEO_PLAYER} from '@/constants';
+import DetailsInfo from '@/components/details/details.info';
 
 export default class Details extends Lightning.Component {
   static _template() {
     return {
-      ImageTitle: {
-        w: 720
+      Background: {
+        rect: true,
+        w: 1920,
+        h: 1080,
+        alpha: 0,
+        src: Utils.asset('images/ui/background.png')
       },
-      Info: {
-        y: 180,
-        flex: { direction: 'row', padding: 20, wrap: false, justifyContent: 'space-between' },
-        w: 500,
-        Rating: {
-          flexItem: { margin: 10 },
-          text: {
-            fontFace: 'Regular',
-            fontSize: 24,
-            fontStyle: 'bold',
-            fontAlign: 'center'
-          }
+      VideoPlayer: {
+        type: VideoPlayer,
+        alpha: 0,
+        signals: { videoEnded: '_videoEnded' }
+      },
+      ControlSection: {
+        y: 150,
+        x: 100,
+        DetailsInfo: {
+          type: DetailsInfo
         },
-        Year: {
-          flexItem: { margin: 10 },
-          text: {
-            fontFace: 'Regular',
-            fontSize: 24,
-            fontAlign: 'center'
-          }
-        },
-        PGRating: {
-          flexItem: { margin: 10 },
-          zIndex: 1,
-          text: {
-            fontFace: 'Regular',
-            fontSize: 24,
-            fontAlign: 'center'
-          },
-          RatingBorder: {
-            zIndex: 0,
-            x: -8,
-            texture: Lightning.Tools.getRoundRect(53, 30, 4, 1, 0xffffffff, true, 0x00ffffff)
-          }
+        DetailsControls: {
+          y: 280,
+          type: DetailsControls
         }
       },
-      DetailsControls: {
-        y: 280,
-        type: DetailsControls
+      Episodes: {
+        alpha: 0,
+        y: 580,
+        x: 100,
+        type: List
+      },
+      Overview: {
+        x: 100,
+        Description: {},
+        Cast: {
+          type: Cast
+        }
+      },
+      Popular: {
+        y: 580,
+        x: 100,
+        type: Slider,
+        alpha: 0
       }
     };
   }
 
-  set data(data) {
-    this._updateDetails(data);
-    this._data = data;
+  _setup() {
+    this._currentlyFocused = null;
   }
 
-  get data() {
-    return this._data;
-  }
-
-  $onControlSelected({ control }) {
-    if (this._hasMethod(control.action)) {
-      return this[control.action]();
-    }
-  }
-
-  playAction() {
-    this._setState('PlayState');
-  }
-
-  addMyListAction() {
-    this._setState('AddMyListState');
-  }
-
-  _updateDetails({ path, cast, year, info, rating, pgRating, imageTitle }) {
-    this.patch({
-      ImageTitle: {
-        texture: {
-          resizeMode: {
-            type: 'contain',
-            w: 720,
-            h: 250
-          },
-          type: Lightning.textures.ImageTexture,
-          src: Utils.asset(imageTitle)
-        }
-      },
-      Info: {
-        Rating: {
-          text: { text: `${rating}% Match` }
-        },
-        Year: {
-          text: { text: year }
-        },
-        PGRating: {
-          text: { text: `${pgRating}+` }
-        }
-      }
-    });
+  _init() {
+    this._setState('DetailsControlState');
   }
 
   _getFocused() {
-    return this.tag('DetailsControls');
+    return this._currentlyFocused;
   }
 
+  $onEpisodeItemFocus({ item }) {
+    // this._updateVideo(item.intro);
+    this._updateBackground(item.path);
+  }
+
+  /**
+   * @param {String} path
+   * @param {Object} cast
+   * @param {String} year
+   * @param {String} info
+   * @param {Number} rating
+   * @param {String} pgRating
+   * @param {String} imageTitle
+   * @param {String} intro
+   * @private
+   */
+  _updateDetails({ path, cast, year, info, rating, pgRating, imageTitle, intro }) {
+    this.tag('DetailsInfo').info = { year, rating, pgRating, imageTitle };
+    this._populateCast(cast, path);
+    // this._updateVideo(intro);
+    this._updateBackground(`${path}/backdrop.jpg`);
+  }
+
+  // _updateVideo(intro) {
+  //   this.tag('VideoPlayer').play(intro);
+  // }
+
+  _updateBackground(src) {
+    this.tag(TAG_BACKGROUND).src = Utils.asset(src);
+  }
+
+  /**
+   * @type {Object} episodes
+   * @property {String} label
+   * @property {Array} items
+   * @property {Number} itemWidth
+   * @property {Number} itemHeight
+   * @private
+   */
+  _updateEpisodes(episodes) {
+    this.tag('Episodes').patch({
+      label: episodes.label,
+      itemSize: { w: episodes.itemWidth, h: episodes.itemHeight },
+      items: episodes.items
+    });
+  }
+
+  _populateCast(cast, path) {
+    this.tag('Cast').patch({
+      label: cast.label,
+      itemSize: { w: cast.itemWidth, h: cast.itemHeight },
+      path,
+      items: cast.items
+    });
+  }
+
+  // setters/getters
+  set activeItem(item) {
+    this._activeItem = item;
+    this._updateDetails(item);
+  }
+
+  get activeItem() {
+    return this._activeItem;
+  }
+
+  set popularItems(popularItems) {
+    this._popularItems = popularItems;
+  }
+
+  get popularItems() {
+    return this._popularItems;
+  }
+
+  /**
+   * @type {Object} episodes
+   * @property {String} label
+   * @property {Array} items
+   * @property {Number} itemWidth
+   * @property {Number} itemHeight
+   */
+  set episodes(episodes) {
+    this._episodes = episodes;
+    this._updateEpisodes(episodes);
+  }
+
+  /**
+   * @return {{ items: Array, label: String, itemWidth: Number, itemHeight: Number }}
+   */
+  get episodes() {
+    return this._episodes;
+  }
+  // setters/getters
+
   static _states() {
-    return [class PlayState extends this {}, class AddMyListState extends this {}];
+    return [
+      class DetailsControlState extends this {
+        $enter() {
+          this._currentlyFocused = this.tag('DetailsControls');
+          this.tag('Episodes').setSmooth('alpha', 1);
+          this.tag(TAG_BACKGROUND).setSmooth('alpha', 1);
+        }
+
+        $exit() {
+          this._currentlyFocused = null;
+          this.tag('Episodes').setSmooth('alpha', 0);
+          this.tag(TAG_BACKGROUND).setSmooth('alpha', 0);
+        }
+
+        _handleDown() {
+          this._setState('EpisodesState');
+        }
+
+        _videoEnded() {
+          this.tag(TAG_BACKGROUND).setSmooth('alpha', 1);
+        }
+      },
+      class EpisodesState extends this {
+        $enter() {
+          const tag = this.tag('Episodes');
+          this._currentlyFocused = tag;
+          tag.setSmooth('alpha', 1);
+          this.tag(TAG_BACKGROUND).setSmooth('alpha', 1);
+        }
+
+        $exit() {
+          this._currentlyFocused = null;
+          this.tag('Episodes').setSmooth('alpha', 0);
+        }
+
+        _handleUp() {
+          this._setState('DetailsControlState');
+        }
+
+        _handleDown() {
+          this._setState('OverviewState');
+        }
+      },
+      class OverviewState extends this {
+        $enter() {
+          const tag = this.tag('Overview');
+          this._currentlyFocused = this.tag('Cast');
+          tag.setSmooth('alpha', 1);
+        }
+
+        $exit() {
+          this._currentlyFocused = null;
+          this.tag('Overview').setSmooth('alpha', 0);
+        }
+
+        _handleUp() {
+          this._setState('EpisodesState');
+        }
+
+        _handleDown() {
+          this._setState('PopularState');
+        }
+      },
+      class PopularState extends this {
+        $enter() {
+          const tag = this.tag('Popular');
+          this._currentlyFocused = tag;
+          tag.setSmooth('alpha', 1);
+        }
+
+        $exit() {
+          this._currentlyFocused = null;
+          this.tag('Popular').setSmooth('alpha', 0);
+        }
+
+        _handleUp() {
+          this._setState('OverviewState');
+        }
+      }
+    ];
   }
 }

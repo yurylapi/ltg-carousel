@@ -1,8 +1,8 @@
 import { Lightning } from 'wpe-lightning-sdk';
-import SeasonsWrapper from '@/components/seasons/seasons.wrapper';
-import SeasonsItem from '@/components/seasons/seasons.item';
+import ListWrapper from '@/components/list/list.wrapper';
+import ListItem from '@/components/list/list.item';
 
-export default class Seasons extends Lightning.Component {
+export default class List extends Lightning.Component {
   static _template() {
     return {
       Label: {
@@ -65,8 +65,8 @@ export default class Seasons extends Lightning.Component {
     this._itemSize = this._itemSize ? this._itemSize : { w: 299, h: 169 };
     this.tag('Items').children = value.map((item, index) => {
       return {
-        type: SeasonsWrapper,
-        construct: SeasonsItem,
+        type: ListWrapper,
+        construct: ListItem,
         x: index * (this._itemSize.w + 50),
         size: this._itemSize,
         item: item

@@ -1,16 +1,14 @@
-import { DETAILS_STATE, TAG_BACKGROUND, TAG_SPLASH } from '@/constants';
+import { DETAILS_STATE, TAG_SPLASH } from '@/constants';
 
 export const createSplashState = base =>
   class SplashState extends base {
     $enter() {
       this.tag(TAG_SPLASH).setSmooth('alpha', 1, { duration: 2 });
-      this._api.getVideoData().then(data => {
+      this._api.getData().then(data => {
         this.tag(TAG_SPLASH).startAnimation();
         this.data = data;
-        this.activeItem = this.popularTvShows.data[0];
-        this._populatePopularItems();
-        this._populateDetailsData();
-        this._populateSeasons();
+        this.activeItem = this._getPopularTvShows().shift();
+        this._populateTopMenu();
       });
     }
 
@@ -19,6 +17,6 @@ export const createSplashState = base =>
     }
 
     animationFinished() {
-      this._setState(DETAILS_STATE, [{ activeItem: this.activeItem }]);
+      this._setState(DETAILS_STATE);
     }
   };

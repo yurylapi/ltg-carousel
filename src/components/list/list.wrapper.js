@@ -1,6 +1,6 @@
 import { Lightning } from 'wpe-lightning-sdk';
 
-export default class SeasonsWrapper extends Lightning.Component {
+export default class ListWrapper extends Lightning.Component {
   set construct(value) {
     this._construct = value;
   }
@@ -36,9 +36,9 @@ export default class SeasonsWrapper extends Lightning.Component {
   _firstActive() {
     this.create();
 
-    if (!SeasonsWrapper.FIRST_CREATED) {
+    if (!ListWrapper.FIRST_CREATED) {
       this.fireAncestors('$firstItemCreated');
-      SeasonsWrapper.FIRST_CREATED = true;
+      ListWrapper.FIRST_CREATED = true;
     }
   }
 
@@ -51,4 +51,4 @@ export default class SeasonsWrapper extends Lightning.Component {
   }
 }
 
-SeasonsWrapper.FIRST_CREATED = false;
+ListWrapper.FIRST_CREATED = false;

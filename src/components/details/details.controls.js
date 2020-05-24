@@ -40,6 +40,26 @@ export default class DetailsControls extends Lightning.Component {
   }
 
   _handleEnter() {
-    this.fireAncestors('$onControlSelected', { control: this.activeControl });
+    this._onControlSelected(this.activeControl);
+  }
+
+  _onControlSelected(control) {
+    if (this._hasMethod(control.action)) {
+      return this[control.action]();
+    }
+  }
+
+  // actions
+  playAction() {
+    this._setState('PlayState');
+  }
+
+  addMyListAction() {
+    this._setState('AddMyListState');
+  }
+  // actions
+
+  static _states() {
+    return [class PlayState extends this {}, class AddMyListState extends this {}];
   }
 }

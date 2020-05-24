@@ -7,7 +7,7 @@ export default class Slider extends Lightning.Component {
       alpha: 0.5,
       Title: {
         y: 50,
-        text: { text: '', fontSize: 24 }
+        text: { text: '', fontSize: 24, fontFace: 'Bold' }
       },
       Items: {
         y: 70,
@@ -35,13 +35,11 @@ export default class Slider extends Lightning.Component {
   }
 
   _focus() {
-    this.tag('Title').setSmooth('y', 0);
     this._setState('Expanded');
     this._setIndex();
   }
 
   _unfocus() {
-    this.tag('Title').setSmooth('y', 50);
     this._setState('Collapsed');
   }
 

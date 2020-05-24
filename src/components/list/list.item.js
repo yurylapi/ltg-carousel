@@ -1,9 +1,8 @@
 import { Lightning, Utils } from 'wpe-lightning-sdk';
 
-export default class SeasonsItem extends Lightning.Component {
+export default class ListItem extends Lightning.Component {
   static _template() {
     return {
-      alpha: 0.7,
       Background: {
         rect: true,
         w: 299,
@@ -20,19 +19,29 @@ export default class SeasonsItem extends Lightning.Component {
       Title: {
         y: 175,
         w: 299,
-        text: { fontFace: 'Regular', maxLines: 2, fontSize: 24 }
+        text: { fontFace: 'Regular', maxLines: 2, fontSize: 30 }
       }
     };
   }
 
   _focus() {
     this.tag('Focus').setSmooth('borderWidth', 6);
-    this.setSmooth('alpha', 1);
+    this.patch({
+      smooth: {
+        scale: 1.3,
+        zIndex: 1
+      }
+    });
   }
 
   _unfocus() {
     this.tag('Focus').setSmooth('borderWidth', 0);
-    this.setSmooth('alpha', 0.7);
+    this.patch({
+      smooth: {
+        scale: 1,
+        zIndex: 0
+      }
+    });
   }
 
   set item(item) {

@@ -1,22 +1,8 @@
 import { Lightning, Utils, Locale } from 'wpe-lightning-sdk';
-import { VideoPlayer, Details, TopMenu, Slider, Seasons, Splash } from '../index';
+import { Details, TopMenu, Splash} from '../index';
 import { Api } from '@/lib';
-import {
-  REF_MOVIES,
-  REF_TV_SHOWS,
-  SPLASH_STATE,
-  TAG_BACKGROUND,
-  TAG_DETAILS,
-  TAG_POPULAR,
-  TAG_SEASONS
-} from '@/constants';
-import {
-  createDetailsState,
-  createErrorState,
-  createTopMenuState,
-  createPopularState,
-  createSplashState
-} from '@/components/app/states';
+import {REF_MOVIES, REF_TOP_MENU, REF_TV_SHOWS, SPLASH_STATE, TAG_POPULAR, TAG_TOP_MENU} from '@/constants';
+import { createDetailsState, createErrorState, createTopMenuState, createSplashState } from '@/components/app/states';
 
 export default class App extends Lightning.Component {
   static getFonts() {
@@ -44,44 +30,14 @@ export default class App extends Lightning.Component {
         signals: { animationFinished: true },
         alpha: 0
       },
-      Background: {
-        rect: true,
-        w: 1920,
-        h: 1080,
-        alpha: 0,
-        src: Utils.asset('images/ui/background.png')
-      },
       TopMenu: {
         type: TopMenu,
-        items: [
-          { label: 'TV Shows', action: 'tvShowsActions' },
-          { label: 'Movies', action: 'moviesAction' },
-          { label: 'Recently Added', action: 'recentlyAddedAction' }
-        ],
         alpha: 0,
+        zIndex: 1,
         signals: { select: '_menuSelect' }
       },
       Details: {
-        y: 150,
-        x: 100,
         type: Details,
-        alpha: 0
-      },
-      VideoPlayer: {
-        type: VideoPlayer,
-        alpha: 0,
-        signals: { videoEnded: '_videoEnded' }
-      },
-      Seasons: {
-        alpha: 0,
-        y: 500,
-        x: 100,
-        type: Seasons
-      },
-      Popular: {
-        x: 100,
-        y: 550,
-        type: Slider,
         alpha: 0
       }
     };
@@ -91,10 +47,6 @@ export default class App extends Lightning.Component {
     this._api = new Api();
     this._data = null;
     this._activeItem = null;
-  }
-
-  $api() {
-    return this._api;
   }
 
   _setup() {
@@ -109,11 +61,53 @@ export default class App extends Lightning.Component {
     return this._currentlyFocused;
   }
 
-  $onItemFocus({ item }) {
-    this.tag(TAG_DETAILS).data = item;
-    this.tag(TAG_BACKGROUND).src = Utils.asset(`${item.path}/backdrop.jpg`);
+  // private methods
+  _getMovies() {
+    return this._data.find(element => element.ref === REF_MOVIES).data;
   }
 
+  _getTvShows() {
+    return this._data.find(element => element.ref === REF_TV_SHOWS).data;
+  }
+
+  _getPopularTvShows() {
+    return this._getTvShows().find(element => element.tag === TAG_POPULAR).data;
+  }
+
+  _getSeasonEpisodes(season = 0) {
+    let episodes;
+    if ('seasons' in this.activeItem) {
+      episodes = this.activeItem.seasons[season];
+    }
+    return episodes;
+  }
+
+  /**
+   * @private
+   */
+  _populateTopMenu() {
+    this.tag(TAG_TOP_MENU).items = this._getTopMenuItems();
+  }
+
+  /**
+   * @private
+   */
+  _getTopMenuItems() {
+    return this.data.find(refBlock => refBlock.ref === REF_TOP_MENU).data;
+  }
+
+  _populateDetails() {
+    this.patch({
+      Details: {
+        popularItems: this._getPopularTvShows(),
+        episodes: this._getSeasonEpisodes(),
+        activeItem: this.activeItem
+      }
+    });
+  }
+  // private methods
+
+  // setters/getters
   set data(data) {
     this._data = data;
   }
@@ -124,62 +118,15 @@ export default class App extends Lightning.Component {
 
   set activeItem(item) {
     this._activeItem = item;
+    this._populateDetails();
   }
 
   get activeItem() {
     return this._activeItem;
   }
-
-  get movies() {
-    return this.data.find(element => element.ref === REF_MOVIES).data;
-  }
-
-  get tvShows() {
-    return this.data.find(element => element.ref === REF_TV_SHOWS).data;
-  }
-
-  get popularTvShows() {
-    return this.tvShows.find(element => element.tag === TAG_POPULAR);
-  }
-
-  _populatePopularItems() {
-    this.tag(TAG_POPULAR).patch({
-      data: this.popularTvShows
-    });
-  }
-
-  _populateSeasons() {
-    const season = this.activeItem.seasons[0];
-    this.tag(TAG_SEASONS).patch({
-      itemSize: { w: season.itemWidth, h: season.itemHeight },
-      items: season.items,
-      label: season.label
-    });
-  }
-
-  _populateDetailsData() {
-    this.tag(TAG_DETAILS).data = this.activeItem;
-  }
+  // setters/getters
 
   static _states() {
-    return [
-      createSplashState(this),
-      createTopMenuState(this),
-      createDetailsState(this),
-      createPopularState(this),
-      createErrorState(this)
-      // class SeasonsState extends this {
-      //   $enter() {
-      //     this.tag(TAG_SEASONS).setSmooth('alpha', 1);
-      //     this._currentlyFocused = this.tag(TAG_SEASONS);
-      //   }
-      //
-      //   $exit() {
-      //     this.tag(TAG_SEASONS).setSmooth('alpha', 0);
-      //     this._currentlyFocused = null;
-      //   }
-      // },
-      // class VideoPlayerState extends this {}
-    ];
+    return [createSplashState(this), createTopMenuState(this), createDetailsState(this), createErrorState(this)];
   }
 }

@@ -4,6 +4,7 @@ export default class Button extends Lightning.Component {
   static _template() {
     return {
       texture: Lightning.Tools.getRoundRect(200, 70, 4),
+      alpha: 0.3,
       Label: {
         w: 200,
         y: 18,
@@ -30,6 +31,6 @@ export default class Button extends Lightning.Component {
   }
 
   _unfocus() {
-    this.patch({ smooth: { alpha: 1, scale: 1.0 } });
+    this.patch({ smooth: { alpha: 0.3, scale: 1.0 } });
   }
 }

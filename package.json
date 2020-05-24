@@ -2,7 +2,7 @@
   "name": "com.epam.app.LtgCarousel",
   "description": "Lightning Carousel",
   "dependencies": {
-    "wpe-lightning-sdk": "WebPlatformForEmbedded/Lightning-SDK"
+    "wpe-lightning-sdk": "github:rdkcentral/Lightning-SDK#f0eefff75561f4aa3fde0ebd3415edc9e61e2ee0"
   },
   "lint-staged": {
     "*.js": [

@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "label": "TV Shows",
+    "action": "tvShowsActions"
+  },
+  {
+    "id": 2,
+    "label": "Movies",
+    "action": "moviesAction"
+  },
+  {
+    "id": 3,
+    "label": "Recently Added",
+    "action": "recentlyAddedAction"
+  }
+]

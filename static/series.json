@@ -3,6 +3,8 @@
     "id": 5,
     "label": "popular on tv",
     "tag": "Popular",
+    "itemWidth": 370,
+    "itemHeight": 556,
     "data": [
       {
         "title":"Marvel's Agents of S.H.I.E.L.D.",
@@ -14,26 +16,51 @@
         "pgRating": 13,
         "id":1,
         "cat":5,
-        "cast":[
-          1,
-          2,
-          3,
-          4,
-          5
-        ],
+        "cast": {
+          "label": "Cast",
+          "itemWidth": 100,
+          "itemHeight": 100,
+          "items": [
+            {
+              "id": 1,
+              "actorName": "Piter Dinklage",
+              "roleName": "Tyrion Lannister"
+            },
+            {
+              "id": 2,
+              "actorName": "Piter Dinklage",
+              "roleName": "Tyrion Lannister"
+            },
+            {
+              "id": 3,
+              "actorName": "Piter Dinklage",
+              "roleName": "Tyrion Lannister"
+            },
+            {
+              "id": 4,
+              "actorName": "Piter Dinklage",
+              "roleName": "Tyrion Lannister"
+            },
+            {
+              "id": 5,
+              "actorName": "Piter Dinklage",
+              "roleName": "Tyrion Lannister"
+            }
+          ]
+        },
         "info":"Agent Phil Coulson of S.H.I.E.L.D. (Strategic Homeland Intervention, Enforcement and Logistics Division) puts together a team of agents to investigate the new, the strange and the unknown around the globe, protecting the ordinary from the extraordinary.",
         "seasons": [
           {
             "label": "Season 1",
             "id": "1",
-            "itemWidth": 415,
-            "itemHeight": 238,
+            "itemWidth": 516,
+            "itemHeight": 290,
             "items": [
               {
                 "id": "1",
                 "title": "Trailer",
                 "subTitle": "Trailer",
-                "thumbnail": "tv/seasons/0/6.jpg",
+                "thumbnail": "tv/seasons/0/0.jpg",
                 "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
                 "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
               },
@@ -41,7 +68,7 @@
                 "id": "2",
                 "subTitle": "01",
                 "title": "Dragonstone 1",
-                "thumbnail": "tv/seasons/0/6.jpg",
+                "thumbnail": "tv/seasons/0/0.jpg",
                 "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
                 "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
               },
@@ -49,7 +76,7 @@
                 "id": "3",
                 "subTitle": "02",
                 "title": "Dragonstone 2",
-                "thumbnail": "tv/seasons/0/6.jpg",
+                "thumbnail": "tv/seasons/0/0.jpg",
                 "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
                 "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
               },
@@ -57,7 +84,7 @@
                 "id": "4",
                 "subTitle": "03",
                 "title": "Dragonstone 3",
-                "thumbnail": "tv/seasons/0/6.jpg",
+                "thumbnail": "tv/seasons/0/0.jpg",
                 "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
                 "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
               },
@@ -65,7 +92,7 @@
                 "id": "5",
                 "subTitle": "04",
                 "title": "Dragonstone 4",
-                "thumbnail": "tv/seasons/0/6.jpg",
+                "thumbnail": "tv/seasons/0/0.jpg",
                 "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
                 "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
               },
@@ -73,7 +100,7 @@
                 "id": "6",
                 "subTitle": "05",
                 "title": "Dragonstone 5",
-                "thumbnail": "tv/seasons/0/6.jpg",
+                "thumbnail": "tv/seasons/0/0.jpg",
                 "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
                 "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
               },
@@ -81,7 +108,7 @@
                 "id": "7",
                 "subTitle": "06",
                 "title": "Dragonstone 6",
-                "thumbnail": "tv/seasons/0/6.jpg",
+                "thumbnail": "tv/seasons/0/0.jpg",
                 "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
                 "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
               }
