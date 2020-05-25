@@ -17,9 +17,16 @@ export default class ListItem extends Lightning.Component {
       },
       Image: {},
       Title: {
-        y: 175,
-        w: 299,
-        text: { fontFace: 'Regular', maxLines: 2, fontSize: 30 }
+        text: {
+          fontFace: 'Regular',
+          maxLines: 2,
+          fontSize: 30,
+          highlight: true,
+          paddingLeft: 20,
+          paddingRight: 20,
+          highlightPaddingLeft: 20,
+          highlightPaddingRight: 20
+        }
       }
     };
   }
@@ -60,7 +67,7 @@ export default class ListItem extends Lightning.Component {
         }
       },
       Title: {
-        text: { text: item.title, wordWrapWidth: this._size.w }
+        text: { text: item.title }
       }
     });
   }
@@ -86,7 +93,7 @@ export default class ListItem extends Lightning.Component {
           }
         },
         Title: {
-          y: this._size.h + 7
+          y: this._size.h - 60
         }
       });
     }

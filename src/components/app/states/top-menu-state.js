@@ -9,7 +9,7 @@ export const createTopMenuState = base =>
 
       this.tag(TAG_DETAILS).setSmooth('alpha', 1);
 
-      this._currentlyFocused = this.tag('TopMenu');
+      this._currentlyFocused = this.tag(TAG_TOP_MENU);
     }
 
     $exit() {

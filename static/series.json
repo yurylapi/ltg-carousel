@@ -8,7 +8,7 @@
     "data": [
       {
         "title":"Marvel's Agents of S.H.I.E.L.D.",
-        "imageTitle": "tv/titles/0/0.png",
+        "imageTitle": "tv/titles/0/6.png",
         "year":"2013",
         "path":"tv/popular/agentsofshield",
         "intro": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
@@ -48,6 +48,11 @@
             }
           ]
         },
+        "genres": [
+          "TV Shows based on Books",
+          "British TV Shows",
+          "TV Action & Adventure"
+        ],
         "info":"Agent Phil Coulson of S.H.I.E.L.D. (Strategic Homeland Intervention, Enforcement and Logistics Division) puts together a team of agents to investigate the new, the strange and the unknown around the globe, protecting the ordinary from the extraordinary.",
         "seasons": [
           {

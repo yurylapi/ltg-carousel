@@ -1,8 +1,21 @@
 import { Lightning, Utils } from 'wpe-lightning-sdk';
 import DetailsControls from './details.controls';
-import { Cast, List, Slider, VideoPlayer } from '@/components';
-import { TAG_BACKGROUND, TAG_DETAILS, TAG_VIDEO_PLAYER } from '@/constants';
+import { List, Overview, Popular, VideoPlayer } from '@/components';
+import {
+  DETAILS_CONTROL_STATE,
+  TAG_BACKGROUND,
+  TAG_DETAILS_INFO,
+  TAG_EPISODES,
+  TAG_OVERVIEW,
+  TAG_VIDEO_PLAYER
+} from '@/constants';
 import DetailsInfo from '@/components/details/details.info';
+import {
+  createDetailsControlState,
+  createEpisodesState,
+  createOverviewState,
+  createPopularState
+} from '@/components/details/states';
 
 export default class Details extends Lightning.Component {
   static _template() {
@@ -32,21 +45,20 @@ export default class Details extends Lightning.Component {
       },
       Episodes: {
         alpha: 0,
-        y: 580,
+        y: 550,
         x: 100,
         type: List
       },
       Overview: {
         x: 100,
-        Description: {},
-        Cast: {
-          type: Cast
-        }
+        y: 2000,
+        type: Overview,
+        alpha: 0
       },
       Popular: {
         y: 580,
         x: 100,
-        type: Slider,
+        type: Popular,
         alpha: 0
       }
     };
@@ -58,7 +70,7 @@ export default class Details extends Lightning.Component {
   }
 
   _firstEnable() {
-    this._setState('DetailsControlState');
+    this._setState(DETAILS_CONTROL_STATE);
   }
 
   _getFocused() {
@@ -76,7 +88,10 @@ export default class Details extends Lightning.Component {
    * }} item
    */
   $onItemFocus({ item }) {
-    this.tag(TAG_VIDEO_PLAYER).stop();
+    const tagVideoPlayer = this.tag(TAG_VIDEO_PLAYER);
+    if (tagVideoPlayer.isPlaying()) {
+      tagVideoPlayer.stop();
+    }
     this._backgroundToVideo.stop();
     this._updateBackground(item.episodeBackground);
     this.activeVideo = item.intro;
@@ -137,8 +152,13 @@ export default class Details extends Lightning.Component {
     });
   }
 
+  /**
+   * Run Video Player with active video
+   *
+   * @private
+   */
   _playVideo() {
-    this.tag(TAG_VIDEO_PLAYER).play(this.activeVideo);
+    this.tag(TAG_VIDEO_PLAYER).play(this.activeVideo, false, true);
   }
 
   /**
@@ -158,7 +178,7 @@ export default class Details extends Lightning.Component {
    * @private
    */
   _populateEpisodes(episodes) {
-    this.tag('Episodes').patch({
+    this.tag(TAG_EPISODES).patch({
       label: episodes.label,
       itemSize: { w: episodes.itemWidth, h: episodes.itemHeight },
       items: episodes.items
@@ -168,15 +188,12 @@ export default class Details extends Lightning.Component {
   /**
    * @param {{ label: String, items: Array, itemWidth: Number, itemHeight: Number }} cast
    * @param {String} path
+   * @param {String} info
+   * @param {String[]} genres
    * @private
    */
-  _populateCast(cast, path) {
-    this.tag('Cast').patch({
-      label: cast.label,
-      itemSize: { w: cast.itemWidth, h: cast.itemHeight },
-      path,
-      items: cast.items
-    });
+  _populateOverview(cast, path, info, genres) {
+    this.tag(TAG_OVERVIEW).overviewData = { cast, path, info, genres };
   }
 
   /**
@@ -188,11 +205,12 @@ export default class Details extends Lightning.Component {
    * @param {String} pgRating
    * @param {String} imageTitle
    * @param {String} intro
+   * @param {String[]} genres
    * @private
    */
-  _updateDetails({ path, cast, year, info, rating, pgRating, imageTitle, intro }) {
-    this.tag('DetailsInfo').info = { year, rating, pgRating, imageTitle };
-    this._populateCast(cast, path);
+  _updateDetails({ path, cast, year, info, rating, pgRating, imageTitle, intro, genres }) {
+    this.tag(TAG_DETAILS_INFO).info = { year, rating, pgRating, imageTitle };
+    this._populateOverview(cast, path, info, genres);
     this.activeVideo = intro;
     this._updateBackground(`${path}/backdrop.jpg`);
   }
@@ -242,97 +260,26 @@ export default class Details extends Lightning.Component {
     return this._episodes;
   }
 
+  /**
+   * @param {String} video
+   */
   set activeVideo(video) {
     this._activeVideo = video;
   }
 
+  /**
+   * @returns {String}
+   */
   get activeVideo() {
     return this._activeVideo;
   }
 
   static _states() {
     return [
-      class DetailsControlState extends this {
-        $enter() {
-          this._currentlyFocused = this.tag('DetailsControls');
-          this.tag('Episodes').setSmooth('alpha', 1);
-          this.tag(TAG_BACKGROUND).setSmooth('alpha', 1);
-          this._backgroundToVideo.start();
-        }
-
-        $exit() {
-          this._currentlyFocused = null;
-          this.tag('Episodes').setSmooth('alpha', 0);
-          this.tag(TAG_BACKGROUND).setSmooth('alpha', 0);
-          this._backgroundToVideo.stop();
-          this.tag(TAG_VIDEO_PLAYER).stop();
-        }
-
-        _handleDown() {
-          this._setState('EpisodesState');
-        }
-
-        _videoEnded() {
-          this._videoToBackground.start();
-        }
-      },
-      class EpisodesState extends this {
-        $enter() {
-          const tag = this.tag('Episodes');
-          this._currentlyFocused = tag;
-          tag.setSmooth('alpha', 1);
-          this.tag(TAG_BACKGROUND).setSmooth('alpha', 1);
-        }
-
-        $exit() {
-          this._currentlyFocused = null;
-          this.tag('Episodes').setSmooth('alpha', 0);
-        }
-
-        _handleUp() {
-          this._setState('DetailsControlState');
-        }
-
-        _handleDown() {
-          this._setState('OverviewState');
-        }
-      },
-      class OverviewState extends this {
-        $enter() {
-          const tag = this.tag('Overview');
-          this._currentlyFocused = this.tag('Cast');
-          tag.setSmooth('alpha', 1);
-        }
-
-        $exit() {
-          this._currentlyFocused = null;
-          this.tag('Overview').setSmooth('alpha', 0);
-        }
-
-        _handleUp() {
-          this._setState('EpisodesState');
-        }
-
-        _handleDown() {
-          this._setState('PopularState');
-        }
-      },
-      class PopularState extends this {
-        $enter() {
-          const tag = this.tag('Popular');
-          this._currentlyFocused = tag;
-          tag.setSmooth('alpha', 1);
-        }
-
-        $exit() {
-          this._currentlyFocused = null;
-          this.tag('Popular').setSmooth('alpha', 0);
-        }
-
-        _handleUp() {
-          this._setState('OverviewState');
-        }
-      }
+      createDetailsControlState(this),
+      createEpisodesState(this),
+      createOverviewState(this),
+      createPopularState(this)
     ];
   }
 }

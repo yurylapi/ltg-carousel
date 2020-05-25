@@ -1,5 +1,6 @@
 import { Lightning, MediaPlayer, Utils } from 'wpe-lightning-sdk';
 import ProgressBar from './video-player.progress-bar';
+import { TAG_CONTROLS, TAG_MEDIA_PLAYER, TAG_PLAY_PAUSE, TAG_PROGRESS_BAR } from '@/constants';
 
 export default class VideoPlayer extends Lightning.Component {
   static _template() {
@@ -37,27 +38,33 @@ export default class VideoPlayer extends Lightning.Component {
     /**
      * We tell the media player which Component is consuming the events
      */
-    this.tag('MediaPlayer').updateSettings({
+    this.tag(TAG_MEDIA_PLAYER).updateSettings({
       consumer: this
     });
   }
 
   _focus() {
-    this.tag('Controls').alpha = 1;
+    this.tag(TAG_CONTROLS).alpha = 1;
   }
 
   _unfocus() {
-    this.tag('Controls').alpha = 0;
+    this.tag(TAG_CONTROLS).alpha = 0;
   }
 
-  play(src, loop = false, settings = {}) {
-    this.tag('MediaPlayer').open(src, settings);
-    this.tag('MediaPlayer').videoEl.style.display = 'block';
-    this.tag('MediaPlayer').videoEl.loop = loop;
+  play(src, loop = false, muted = false, settings = {}) {
+    const tag = this.tag(TAG_MEDIA_PLAYER);
+    tag.open(src, settings);
+    tag.videoEl.muted = muted;
+    tag.videoEl.style.display = 'block';
+    tag.videoEl.loop = loop;
+  }
+
+  isPlaying() {
+    return this.tag(TAG_MEDIA_PLAYER).isPlaying();
   }
 
   stop() {
-    this.tag('MediaPlayer').close();
+    this.tag(TAG_MEDIA_PLAYER).close();
   }
 
   /**
@@ -71,7 +78,7 @@ export default class VideoPlayer extends Lightning.Component {
   }
 
   _handleEnter() {
-    this.tag('MediaPlayer').playPause();
+    this.tag(TAG_MEDIA_PLAYER).playPause();
   }
 
   $mediaplayerPause() {
@@ -92,7 +99,7 @@ export default class VideoPlayer extends Lightning.Component {
       class LoadingState extends this {},
       class PlayingState extends this {
         $enter() {
-          this.tag('PlayPause').src = Utils.asset('images/video-player/pause.png');
+          this.tag(TAG_PLAY_PAUSE).src = Utils.asset('images/video-player/pause.png');
         }
 
         /**
@@ -101,16 +108,16 @@ export default class VideoPlayer extends Lightning.Component {
          * @param duration
          */
         $mediaplayerProgress({ currentTime, duration }) {
-          this.tag('ProgressBar').setProgress(currentTime, duration);
+          this.tag(TAG_PROGRESS_BAR).setProgress(currentTime, duration);
         }
       },
       class PausedState extends this {
         $enter() {
-          this.tag('PlayPause').src = Utils.asset('images/video-player/play.png');
+          this.tag(TAG_PLAY_PAUSE).src = Utils.asset('images/video-player/play.png');
         }
 
         _handleEnter() {
-          this.tag('MediaPlayer').doPlay();
+          this.tag(TAG_MEDIA_PLAYER).doPlay();
         }
       },
       class SkipState extends this {}

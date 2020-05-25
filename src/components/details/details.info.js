@@ -1,4 +1,4 @@
-import {Lightning, Utils} from 'wpe-lightning-sdk';
+import { Lightning, Utils } from 'wpe-lightning-sdk';
 
 export default class DetailsInfo extends Lightning.Component {
   static _template() {

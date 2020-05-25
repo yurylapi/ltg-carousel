@@ -6,7 +6,7 @@ export const createSplashState = base =>
       this.tag(TAG_SPLASH).setSmooth('alpha', 1, { duration: 2 });
       this._api.getData().then(data => {
         this.tag(TAG_SPLASH).startAnimation();
-        this.data = data;
+        this.apiData = data;
         this.activeItem = this._getPopularTvShows().shift();
         this._populateTopMenu();
       });

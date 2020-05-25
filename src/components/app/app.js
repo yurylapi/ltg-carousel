@@ -45,7 +45,7 @@ export default class App extends Lightning.Component {
 
   _construct() {
     this._api = new Api();
-    this._data = null;
+    this._apiData = null;
     this._activeItem = null;
   }
 
@@ -61,18 +61,36 @@ export default class App extends Lightning.Component {
     return this._currentlyFocused;
   }
 
+  /**
+   * @returns {Object}
+   * @private
+   */
   _getMovies() {
-    return this._data.find(element => element.ref === REF_MOVIES).data;
+    return this._apiData.find(element => element.ref === REF_MOVIES).data;
   }
 
+  /**
+   * @returns {Object}
+   * @private
+   */
   _getTvShows() {
-    return this._data.find(element => element.ref === REF_TV_SHOWS).data;
+    return this._apiData.find(element => element.ref === REF_TV_SHOWS).data;
   }
 
+  /**
+   * @returns {Object}
+   * @private
+   */
   _getPopularTvShows() {
     return this._getTvShows().find(element => element.tag === TAG_POPULAR).data;
   }
 
+  /**
+   *
+   * @param {Number} season
+   * @returns {Object[]}
+   * @private
+   */
   _getSeasonEpisodes(season = 0) {
     let episodes;
     if ('seasons' in this.activeItem) {
@@ -92,9 +110,12 @@ export default class App extends Lightning.Component {
    * @private
    */
   _getTopMenuItems() {
-    return this.data.find(refBlock => refBlock.ref === REF_TOP_MENU).data;
+    return this.apiData.find(refBlock => refBlock.ref === REF_TOP_MENU).data;
   }
 
+  /**
+   * @private
+   */
   _populateDetails() {
     this.patch({
       Details: {
@@ -105,12 +126,18 @@ export default class App extends Lightning.Component {
     });
   }
 
-  set data(data) {
-    this._data = data;
+  /**
+   * @param data
+   */
+  set apiData(data) {
+    this._apiData = data;
   }
 
-  get data() {
-    return this._data;
+  /**
+   * @returns {null}
+   */
+  get apiData() {
+    return this._apiData;
   }
 
   set activeItem(item) {

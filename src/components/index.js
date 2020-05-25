@@ -6,6 +6,8 @@ export { default as VideoPlayer } from './video-player';
 export { default as Button } from './button';
 
 export { default as Details } from './details';
+export { default as Overview } from './overview';
 export { default as Cast } from './cast';
 
 export { default as List } from './list';
+export { default as Popular } from './popular';
