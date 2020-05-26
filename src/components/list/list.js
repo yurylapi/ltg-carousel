@@ -60,6 +60,14 @@ export default class List extends Lightning.Component {
     }
   }
 
+  set constructItem(item) {
+    this._constructItem = item;
+  }
+
+  get constructItem() {
+    return this._constructItem;
+  }
+
   get index() {
     return this._index;
   }
@@ -74,7 +82,8 @@ export default class List extends Lightning.Component {
     this.tag('Items').children = value.map((item, index) => {
       return {
         type: ListWrapper,
-        construct: ListItem,
+        path: this.imagePath,
+        construct: this._constructItem || ListItem,
         x: index * (this._itemSize.w + 50),
         size: this._itemSize,
         item: item
@@ -90,6 +99,14 @@ export default class List extends Lightning.Component {
 
   get itemSize() {
     return this._itemSize;
+  }
+
+  set imagePath(path) {
+    this._imagePath = path;
+  }
+
+  get imagePath() {
+    return this._imagePath;
   }
 
   get items() {

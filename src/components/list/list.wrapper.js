@@ -25,8 +25,21 @@ export default class ListWrapper extends Lightning.Component {
     this._size = v;
   }
 
+  set path(path) {
+    this._path = path;
+  }
+
+  get path() {
+    return this._path;
+  }
+
   create() {
-    this.children = [{ type: this._construct, size: this._size, item: this._item }];
+    const path = this._path;
+    let item = this._item;
+    if (path) {
+      item = { ...this._item, path };
+    }
+    this.children = [{ type: this._construct, size: this._size, item }];
 
     if (this._notifyOnItemCreation && this.hasFocus()) {
       this._refocus();

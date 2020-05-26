@@ -7,7 +7,7 @@ export const createSplashState = base =>
       this._api.getData().then(data => {
         this.tag(TAG_SPLASH).startAnimation();
         this.apiData = data;
-        this.activeItem = this._getPopularTvShows().shift();
+        this.activeItem = this._getPopularTvShows().data.shift();
         this._populateTopMenu();
       });
     }

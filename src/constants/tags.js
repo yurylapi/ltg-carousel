@@ -16,6 +16,7 @@ export const TAG_DETAILS_INFO = 'DetailsInfo';
 
 export const TAG_VIDEO_PLAYER = 'VideoPlayer';
 export const TAG_MEDIA_PLAYER = 'MediaPlayer';
+export const TAG_CONTROLS_SECTION = 'ControlSection';
 export const TAG_CONTROLS = 'Controls';
 export const TAG_PLAY_PAUSE = 'PlayPause';
 export const TAG_PROGRESS_BAR = 'ProgressBar';

@@ -1,10 +1,10 @@
 [
   {
     "id": 5,
-    "label": "popular on tv",
+    "label": "Popular on TV",
     "tag": "Popular",
-    "itemWidth": 370,
-    "itemHeight": 556,
+    "itemWidth": 280,
+    "itemHeight": 420,
     "data": [
       {
         "title":"Marvel's Agents of S.H.I.E.L.D.",
@@ -18,8 +18,10 @@
         "cat":5,
         "cast": {
           "label": "Cast",
-          "itemWidth": 100,
-          "itemHeight": 100,
+          "itemWidth": 556,
+          "itemHeight": 200,
+          "imageWidth": 130,
+          "imageHeight": 165,
           "items": [
             {
               "id": 1,

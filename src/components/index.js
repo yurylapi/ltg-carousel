@@ -7,7 +7,7 @@ export { default as Button } from './button';
 
 export { default as Details } from './details';
 export { default as Overview } from './overview';
-export { default as Cast } from './cast';
+export { default as CastItem } from './cast-item';
 
 export { default as List } from './list';
-export { default as Popular } from './popular';
+export { default as PopularItem } from './popular-item';

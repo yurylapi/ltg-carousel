@@ -1,12 +1,13 @@
 import { Lightning, Utils } from 'wpe-lightning-sdk';
 import DetailsControls from './details.controls';
-import { List, Overview, Popular, VideoPlayer } from '@/components';
+import { CastItem, List, Overview, PopularItem, VideoPlayer } from '@/components';
 import {
   DETAILS_CONTROL_STATE,
   TAG_BACKGROUND,
   TAG_DETAILS_INFO,
   TAG_EPISODES,
   TAG_OVERVIEW,
+  TAG_POPULAR,
   TAG_VIDEO_PLAYER
 } from '@/constants';
 import DetailsInfo from '@/components/details/details.info';
@@ -33,7 +34,6 @@ export default class Details extends Lightning.Component {
         signals: { videoEnded: '_videoEnded' }
       },
       ControlSection: {
-        y: 150,
         x: 100,
         DetailsInfo: {
           type: DetailsInfo
@@ -44,8 +44,7 @@ export default class Details extends Lightning.Component {
         }
       },
       Episodes: {
-        alpha: 0,
-        y: 550,
+        y: 580,
         x: 100,
         type: List
       },
@@ -56,9 +55,9 @@ export default class Details extends Lightning.Component {
         alpha: 0
       },
       Popular: {
-        y: 580,
+        y: 2000,
         x: 100,
-        type: Popular,
+        type: List,
         alpha: 0
       }
     };
@@ -80,11 +79,8 @@ export default class Details extends Lightning.Component {
   /**
    * @param {{
    *  id: Number,
-   *  subTitle: String,
-   *  thumbnail: String,
-   *  episodeBackground: String,
-   *  intro: String,
-   *  video: String
+   *  background: String,
+   *  intro: String
    * }} item
    */
   $onItemFocus({ item }) {
@@ -93,7 +89,7 @@ export default class Details extends Lightning.Component {
       tagVideoPlayer.stop();
     }
     this._backgroundToVideo.stop();
-    this._updateBackground(item.episodeBackground);
+    this._updateBackground(item.background);
     this.activeVideo = item.intro;
     this._backgroundToVideo.start();
   }
@@ -106,7 +102,7 @@ export default class Details extends Lightning.Component {
   _registerAnimations() {
     this._backgroundToVideoAnimation();
     this._videoToBackgroundAnimation();
-    this._backgroundToVideoSubscriber();
+    this._backgroundToVideoListener();
   }
 
   /**
@@ -146,7 +142,7 @@ export default class Details extends Lightning.Component {
   /**
    * @private
    */
-  _backgroundToVideoSubscriber() {
+  _backgroundToVideoListener() {
     this._backgroundToVideo.on('finish', () => {
       this._playVideo();
     });
@@ -181,7 +177,8 @@ export default class Details extends Lightning.Component {
     this.tag(TAG_EPISODES).patch({
       label: episodes.label,
       itemSize: { w: episodes.itemWidth, h: episodes.itemHeight },
-      items: episodes.items
+      items: episodes.items,
+      constructItem: CastItem
     });
   }
 
@@ -211,8 +208,19 @@ export default class Details extends Lightning.Component {
   _updateDetails({ path, cast, year, info, rating, pgRating, imageTitle, intro, genres }) {
     this.tag(TAG_DETAILS_INFO).info = { year, rating, pgRating, imageTitle };
     this._populateOverview(cast, path, info, genres);
+    this._populatePopulars();
     this.activeVideo = intro;
     this._updateBackground(`${path}/backdrop.jpg`);
+  }
+
+  _populatePopulars() {
+    const popularData = this.popularData;
+    this.tag(TAG_POPULAR).patch({
+      constructItem: PopularItem,
+      label: popularData.label,
+      itemSize: popularData.sizes,
+      items: this.popularItems
+    });
   }
 
   /**
@@ -224,7 +232,8 @@ export default class Details extends Lightning.Component {
    *  rating: Number,
    *  pgRating: String,
    *  imageTitle: String,
-   *  intro: String
+   *  intro: String,
+   *  genres: String[]
    * }} item
    */
   set details(item) {
@@ -272,6 +281,20 @@ export default class Details extends Lightning.Component {
    */
   get activeVideo() {
     return this._activeVideo;
+  }
+
+  /**
+   * @param {{ label: String, sizes: Number[] }} popularData
+   */
+  set popularData(popularData) {
+    this._popularData = popularData;
+  }
+
+  /**
+   * @returns {{ label: String, sizes: Number[] }}
+   */
+  get popularData() {
+    return this._popularData;
   }
 
   static _states() {

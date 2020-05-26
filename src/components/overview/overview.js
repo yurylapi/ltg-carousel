@@ -1,14 +1,16 @@
 import { Lightning } from 'wpe-lightning-sdk';
-import { Cast } from '@/components';
+import { CastItem, List } from '@/components';
 import OverviewGenresItem from '@/components/overview/overview.genres.item';
-import { TAG_GENRES } from '@/constants';
+import { TAG_CAST, TAG_GENRES } from '@/constants';
 
 export default class Logo extends Lightning.Component {
   static _template() {
     return {
       Wrapper: {
-        w: 1700,
-        flex: { direction: 'row', wrap: false, justifyContent: 'space-between' },
+        w: 1670,
+        rect: true,
+        color: '0x4C000000',
+        flex: { direction: 'row', wrap: false, justifyContent: 'space-between', padding: 20 },
         Description: {
           flexItem: {},
           flex: { direction: 'column', wrap: false },
@@ -29,13 +31,23 @@ export default class Logo extends Lightning.Component {
         }
       },
       Cast: {
-        type: Cast
+        y: 220,
+        w: 1670,
+        h: 250,
+        type: List
       }
     };
   }
 
   /**
-   * @param {{ label: String, items: Array, itemWidth: Number, itemHeight: Number }} cast
+   * @param {{
+   *  label: String,
+   *  items: Object[],
+   *  itemWidth: Number,
+   *  itemHeight: Number,
+   *  imageWidth: Number,
+   *  imageHeight: Number
+   *  }} cast
    * @param {String} path
    * @param {String} info
    * @param {String[]} genres
@@ -62,9 +74,16 @@ export default class Logo extends Lightning.Component {
         }
       },
       Cast: {
-        items: cast,
-        path: path
+        constructItem: CastItem,
+        label: cast.label,
+        imagePath: path,
+        itemSize: { w: cast.itemWidth, h: cast.itemHeight, imageW: cast.imageWidth, imageH: cast.imageHeight },
+        items: cast.items
       }
     });
+  }
+
+  _getFocused() {
+    return this.tag(TAG_CAST);
   }
 }

@@ -1,6 +1,6 @@
 import { Lightning, Utils, Locale } from 'wpe-lightning-sdk';
 import { Details, TopMenu, Splash } from '../index';
-import { Api } from '@/lib';
+import { Api } from '@/services';
 import { REF_MOVIES, REF_TOP_MENU, REF_TV_SHOWS, SPLASH_STATE, TAG_POPULAR, TAG_TOP_MENU } from '@/constants';
 import { createDetailsState, createErrorState, createTopMenuState, createSplashState } from '@/components/app/states';
 
@@ -82,7 +82,7 @@ export default class App extends Lightning.Component {
    * @private
    */
   _getPopularTvShows() {
-    return this._getTvShows().find(element => element.tag === TAG_POPULAR).data;
+    return this._getTvShows().find(element => element.tag === TAG_POPULAR);
   }
 
   /**
@@ -117,9 +117,17 @@ export default class App extends Lightning.Component {
    * @private
    */
   _populateDetails() {
+    const tvShows = this._getPopularTvShows();
     this.patch({
       Details: {
-        popularItems: this._getPopularTvShows(),
+        popularData: {
+          label: tvShows.label,
+          sizes: {
+            w: tvShows.itemWidth,
+            h: tvShows.itemHeight
+          }
+        },
+        popularItems: tvShows.data,
         episodes: this._getSeasonEpisodes(),
         details: this.activeItem
       }

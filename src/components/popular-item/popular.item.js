@@ -1,43 +1,26 @@
 import { Lightning, Utils } from 'wpe-lightning-sdk';
 
-export default class ListItem extends Lightning.Component {
+export default class PopularItem extends Lightning.Component {
   static _template() {
     return {
-      Background: {
-        rect: true,
-        w: 299,
-        h: 168,
-        color: 0xff000000
-      },
+      scale: 0.9,
       Focus: {
         type: Lightning.components.BorderComponent,
         borderWidth: 0,
         w: 299,
         h: 168
       },
-      Image: {},
-      Title: {
-        text: {
-          fontFace: 'Regular',
-          maxLines: 2,
-          fontSize: 30,
-          highlight: true,
-          paddingLeft: 20,
-          paddingRight: 20,
-          highlightPaddingLeft: 20,
-          highlightPaddingRight: 20
-        }
-      }
+      Image: {}
     };
   }
 
   _focus() {
-    const item = this._item;
-    this.fireAncestors('$onItemFocus', { item: { ...item, background: item.episodeBackground } });
-    this.tag('Focus').setSmooth('borderWidth', 6);
+    // const item = this._item;
+    // this.fireAncestors('$onItemFocus', { item: { ...item, background: `${item.path}/backdrop.jpg` } });
+    this.tag('Focus').setSmooth('borderWidth', 3);
     this.patch({
       smooth: {
-        scale: 1.3,
+        scale: 1,
         zIndex: 1
       }
     });
@@ -47,7 +30,7 @@ export default class ListItem extends Lightning.Component {
     this.tag('Focus').setSmooth('borderWidth', 0);
     this.patch({
       smooth: {
-        scale: 1,
+        scale: 0.9,
         zIndex: 0
       }
     });
@@ -64,11 +47,8 @@ export default class ListItem extends Lightning.Component {
             h: this._size.h
           },
           type: Lightning.textures.ImageTexture,
-          src: Utils.asset(item.thumbnail)
+          src: Utils.asset(`${item.path}/posterS.jpg`)
         }
-      },
-      Title: {
-        text: { text: item.title }
       }
     });
   }
@@ -77,10 +57,6 @@ export default class ListItem extends Lightning.Component {
     if (w && h) {
       this._size = { w: w, h: h };
       this.patch({
-        Background: {
-          w: w,
-          h: h
-        },
         Focus: {
           w: w,
           h: h
@@ -92,9 +68,6 @@ export default class ListItem extends Lightning.Component {
               h: h
             }
           }
-        },
-        Title: {
-          y: this._size.h - 60
         }
       });
     }
