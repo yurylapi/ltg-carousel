@@ -17,7 +17,7 @@
         "id":1,
         "cat":5,
         "cast": {
-          "label": "Cast",
+          "label": "",
           "itemWidth": 556,
           "itemHeight": 200,
           "imageWidth": 130,

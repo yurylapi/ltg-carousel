@@ -31,7 +31,7 @@ export default class Logo extends Lightning.Component {
         }
       },
       Cast: {
-        y: 220,
+        y: 180,
         w: 1670,
         h: 250,
         type: List

@@ -22,7 +22,7 @@ export const createPopularState = base =>
     _showPopular() {
       const tag = this.tag(TAG_POPULAR);
       tag.setSmooth('alpha', 1);
-      tag.setSmooth('y', 580);
+      tag.setSmooth('y', 600);
     }
 
     $exit() {

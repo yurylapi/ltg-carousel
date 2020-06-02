@@ -3,11 +3,12 @@ import { Lightning, Utils } from 'wpe-lightning-sdk';
 export default class DetailsInfo extends Lightning.Component {
   static _template() {
     return {
+      w: 720,
       ImageTitle: {},
       InfoBlock: {
         y: 180,
         flex: { direction: 'row', padding: 20, wrap: false, justifyContent: 'space-between' },
-        w: 500,
+        w: 400,
         Rating: {
           flexItem: { margin: 10 },
           text: {

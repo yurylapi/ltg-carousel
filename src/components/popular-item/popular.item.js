@@ -20,7 +20,7 @@ export default class PopularItem extends Lightning.Component {
     this.tag('Focus').setSmooth('borderWidth', 3);
     this.patch({
       smooth: {
-        scale: 1,
+        scale: 0.95,
         zIndex: 1
       }
     });
